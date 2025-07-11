@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/11 10:45:47 by reeer-aa          #+#    #+#             */
+/*   Updated: 2025/07/11 10:48:37 by reeer-aa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void init_data(t_data *data)
+void	init_data(t_data *data)
 {
 	data->config.texture_north = NULL;
 	data->config.texture_south = NULL;
@@ -13,7 +25,7 @@ void init_data(t_data *data)
 	data->map_height = 0;
 }
 
-static void print_texture(char *name, char *texture)
+static void	print_texture(char *name, char *texture)
 {
 	printf("Texture %s: ", name);
 	if (texture)
@@ -22,7 +34,7 @@ static void print_texture(char *name, char *texture)
 		printf("Non définie\n");
 }
 
-static void print_textures(t_config *config)
+static void	print_textures(t_config *config)
 {
 	print_texture("Nord", config->texture_north);
 	print_texture("Sud", config->texture_south);
@@ -30,7 +42,7 @@ static void print_textures(t_config *config)
 	print_texture("Est", config->texture_est);
 }
 
-void print_config(t_config *config)
+void	print_config(t_config *config)
 {
 	printf("=== CONFIGURATION ===\n");
 	print_textures(config);
@@ -39,26 +51,23 @@ void print_config(t_config *config)
 	printf("=====================\n");
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    t_data data;
-    
-    if (ac != 2)
-    {
-        printf("usage: %s <map.cub>\n", av[0]);
-        return (1);
-    }   
-    init_data(&data);  
-    if (parse_file(av[1], &data))
-    {
-        printf("Erreur pendant le parsing\n");
-        cleanup_data(&data);  // Cleanup en cas d'erreur
-        return (1);
-    }    
-    printf("Parsing termine\n");
-    find_player(&data);       // Trouvez le joueur
-    print_config(&data.config);
-    print_map(&data);         // Affichez la carte    
-    cleanup_data(&data);      // Cleanup à la fin
-    return (0);
+	t_data data;
+
+	if (ac != 2 || !check_file_extension(av[1]))
+		return (printf("usage: %s <map.cub>\n", av[0]), 1);
+	init_data(&data);
+	if (parse_file(av[1], &data))
+	{
+		printf("Erreur pendant le parsing\n");
+		cleanup_data(&data); // Cleanup en cas d'erreur
+		return (1);
+	}
+	printf("Parsing termine\n");
+	find_player(&data); // Trouvez le joueur
+	print_config(&data.config);
+	print_map(&data);    // Affichez la carte
+	cleanup_data(&data); // Cleanup à la fin
+	return (0);
 }

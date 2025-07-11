@@ -1,20 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/11 10:45:42 by reeer-aa          #+#    #+#             */
+/*   Updated: 2025/07/11 10:45:42 by reeer-aa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void print_map(t_data *data)
+void	print_map(t_data *data)
 {
-	int i;
+	int	i;
 
 	printf("=== CARTE ===\n");
 	printf("Dimensions: %d x %d\n", data->map_width, data->map_height);
-	printf("Joueur: (%d, %d) direction '%c'\n",
-		data->player.x, data->player.y, data->player.direction);
-	
+	printf("Joueur: (%d, %d) direction '%c'\n", data->player.x, data->player.y,
+		data->player.direction);
 	if (!data->map)
 	{
 		printf("ERREUR: data->map est NULL!\n");
-		return;
+		return ;
 	}
-	
 	i = 0;
 	while (i < data->map_height)
 	{
@@ -24,13 +34,12 @@ void print_map(t_data *data)
 	printf("============\n");
 }
 
-void cleanup_map(t_data *data)
+void	cleanup_map(t_data *data)
 {
-	int i;
+	int	i;
 
 	if (!data->map)
-		return;
-
+		return ;
 	i = 0;
 	while (i < data->map_height)
 	{
@@ -44,11 +53,11 @@ void cleanup_map(t_data *data)
 	data->map_width = 0;
 }
 
-int find_player(t_data *data)
+int	find_player(t_data *data)
 {
-	int y;
-	int x;
-	int count;
+	int	y;
+	int	x;
+	int	count;
 
 	y = 0;
 	count = 0;
@@ -57,8 +66,8 @@ int find_player(t_data *data)
 		x = 0;
 		while (data->map[y][x])
 		{
-			if (data->map[y][x] == 'N' || data->map[y][x] == 'S' ||
-				data->map[y][x] == 'E' || data->map[y][x] == 'W')
+			if (data->map[y][x] == 'N' || data->map[y][x] == 'S'
+				|| data->map[y][x] == 'E' || data->map[y][x] == 'W')
 			{
 				count++;
 				data->player.x = x;

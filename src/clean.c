@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/11 10:45:51 by reeer-aa          #+#    #+#             */
+/*   Updated: 2025/07/11 10:45:51 by reeer-aa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-void cleanup_config(t_config *config)
+void	cleanup_config(t_config *config)
 {
 	if (config->texture_north)
 	{
@@ -24,7 +36,7 @@ void cleanup_config(t_config *config)
 	}
 }
 
-void cleanup_data(t_data *data)
+void	cleanup_data(t_data *data)
 {
 	cleanup_config(&data->config);
 	cleanup_map(data);

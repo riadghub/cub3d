@@ -1,8 +1,4 @@
 NAME = cub3D
-MLX_DIR = minilibx-linux
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm -lbsd
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -I get_next_line -I $(MLX_DIR) -I$(LIBFT_DIR) -I /usr/include/X11 -I includes
 
 SRCS = src/main.c \
 	src/parse_file.c \
@@ -12,42 +8,76 @@ SRCS = src/main.c \
 	get_next_line/get_next_line.c \
 	get_next_line/get_next_line_utils.c
 
+HEADERS = ./includes/
+
+OBJS = ${SRCS:.c=.o}
+
+CC = cc
+
+CFLAGS = -Wall -Wextra -Werror
+
+MLX_DIR = ./minilibx-linux
+
+MLX = $(MLX_DIR)/libmlx.a
+
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
+
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
-MLX_LIB = $(MLX_DIR)/libmlx.a
-OBJS = $(SRCS:.c=.o)
 
 get_next_line/%.o: get_next_line/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-src/%.o: src/%.c
-	@$(CC) $(CFLAGS) -c $< -o $@
+# Couleurs ANSI
+RED = \033[1;31m
+GREEN = \033[1;32m
+BLUE = \033[1;34m
+PURPLE = \033[1;35m
+CYAN = \033[1;36m
+RESET = \033[0m
 
-$(NAME): $(OBJS) $(LIBFT) $(MLX_LIB)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
-	@echo "cub3D compilé avec succès!"
+# Règle principale
+all: ${NAME}
 
-all: $(LIBFT) $(MLX_LIB) $(NAME)
+# Règle pour compiler les fichiers objets
+%.o : %.c
+	@echo "$(BLUE)Compiling $(CYAN)$< $(RESET)..."
+	@${CC} ${CFLAGS} -I ${HEADERS} -I$(MLX_DIR) -I$(LIBFT_DIR) -c $< -o $@
 
+# Règle pour compiler la MiniLibX
+$(MLX):
+	@echo "$(CYAN)Compiling MiniLibX...$(RESET)"
+	@make -C $(MLX_DIR)
+	@echo "$(GREEN)MiniLibX compiled!$(RESET)"
+
+# Règle pour compiler libft
 $(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR) > /dev/null 2>&1
-	@echo "Libft compilée."
+	@echo "$(PURPLE)Compiling libft...$(RESET)"
+	@make -C $(LIBFT_DIR) --no-print-directory
+	@echo "$(GREEN)Libft compiled!$(RESET)"
 
-$(MLX_LIB):
-	@$(MAKE) -C $(MLX_DIR) > /dev/null 2>&1
-	@echo "MiniLibX compilée."
+# Règle pour lier le programme final
+${NAME}: ${OBJS} $(MLX) $(LIBFT)
+	@echo "$(GREEN)Linking objects into $(CYAN)${NAME}$(RESET)..."
+	@${CC} ${CFLAGS} -I ${HEADERS} ${OBJS} ${MLX_FLAGS} -L$(LIBFT_DIR) -lft -o ${NAME}
+	@echo "$(GREEN)Build complete!$(RESET)"
 
-clean:
-	@$(MAKE) -C $(LIBFT_DIR) clean > /dev/null 2>&1
-	@$(MAKE) -C $(MLX_DIR) clean > /dev/null 2>&1
-	@rm -f $(OBJS)
-	@echo "Fichiers objets supprimés."
+# Règle pour nettoyer les fichiers objets
+clean :
+	@echo "$(RED)Cleaning object files...$(RESET)"
+	@rm -f ${OBJS}
+	@make -C $(LIBFT_DIR) clean --no-print-directory
+	@echo "$(GREEN)Clean complete!$(RESET)"
 
-fclean: clean
-	@$(MAKE) -C $(LIBFT_DIR) fclean > /dev/null 2>&1
-	@rm -f $(NAME)
-	@echo "Nettoyage complet effectué."
+# Règle pour nettoyer les fichiers objets et l'exécutable
+fclean : clean
+	@echo "$(RED)Removing $(CYAN)${NAME}$(RESET)..."
+	@rm -f ${NAME}
+	@make -C $(LIBFT_DIR) fclean --no-print-directory
+	@echo "$(GREEN)Full clean complete!$(RESET)"
 
-re: fclean all
+# Règle pour recompiler entièrement le projet
+re : fclean all
+	@echo "$(GREEN)Rebuild complete!$(RESET)"
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re run

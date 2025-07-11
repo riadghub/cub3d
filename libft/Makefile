@@ -3,20 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lsadi <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 15:20:47 by lsadi             #+#    #+#              #
-#    Updated: 2024/11/18 01:36:58 by lsadi            ###   ########.fr        #
+#    Updated: 2025/07/11 11:19:01 by reeer-aa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-CC = gcc
-
-CFLAGS = -Wall -Wextra -Werror
-
-SRC = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
+SRCS = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strcmp.c \
       ft_str_len.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c \
       ft_strlcpy.c ft_strlcat.c ft_toupper.c ft_tolower.c ft_str_chr.c \
       ft_strrchr.c ft_strncmp.c ft_memchr.c ft_strnstr.c ft_atoi.c \
@@ -24,24 +20,48 @@ SRC = ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
       ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c free_split.c \
       ft_putendl_fd.c ft_putnbr_fd.c ft_split.c ft_memcmp.c ft_calloc.c ft_strjoin_three.c
 
+OBJS = ${SRCS:.c=.o}
 
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+AR = ar rcs
 
-OBJ = $(SRC:.c=.o)
+# Couleurs ANSI
+RED = \033[1;31m
+GREEN = \033[1;32m
+YELLOW = \033[1;33m
+BLUE = \033[1;34m
+CYAN = \033[1;36m
+RESET = \033[0m
 
-all: $(NAME)
+# Règle principale
+all: ${NAME}
 
-$(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+# Règle pour compiler les fichiers objets
+%.o : %.c
+	@echo "$(BLUE)Compiling $(CYAN)$< $(RESET)..."
+	@${CC} ${CFLAGS} -c $< -o $@
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I includes
+# Règle pour créer la bibliothèque statique
+${NAME}: ${OBJS}
+	@echo "$(GREEN)Creating static library $(CYAN)${NAME}$(RESET)..."
+	@${AR} ${NAME} ${OBJS}
+	@echo "$(GREEN)Build complete!$(RESET)"
 
-clean:
-	rm -f $(OBJ)
+# Règle pour nettoyer les fichiers objets
+clean :
+	@echo "$(RED)Cleaning object files...$(RESET)"
+	@rm -f ${OBJS}
+	@echo "$(GREEN)Clean complete!$(RESET)"
 
-fclean: clean
-	rm -f $(NAME)
+# Règle pour nettoyer les fichiers objets et l'exécutable
+fclean : clean
+	@echo "$(RED)Removing $(CYAN)${NAME}$(RESET)..."
+	@rm -f ${NAME}
+	@echo "$(GREEN)Full clean complete!$(RESET)"
 
-re: fclean all
+# Règle pour recompiler entièrement le projet
+re : fclean all
+	@echo "$(GREEN)Rebuild complete!$(RESET)"
 
 .PHONY: all clean fclean re
