@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:45:47 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/11 10:48:37 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/11 16:08:39 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int	main(int ac, char **av)
 	if (ac != 2 || !check_file_extension(av[1]))
 		return (printf("usage: %s <map.cub>\n", av[0]), 1);
 	init_data(&data);
-	if (parse_file(av[1], &data))
+	if (parse_file(av[1], &data) || !is_valid_map(&data))
 	{
+		// perror("Error\n");
 		printf("Erreur pendant le parsing\n");
 		cleanup_data(&data); // Cleanup en cas d'erreur
 		return (1);
 	}
 	printf("Parsing termine\n");
-	find_player(&data); // Trouvez le joueur
 	print_config(&data.config);
 	print_map(&data);    // Affichez la carte
 	cleanup_data(&data); // Cleanup à la fin

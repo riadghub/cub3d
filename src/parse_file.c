@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:45:37 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/11 10:45:38 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/11 12:11:33 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,25 @@ static void	process_line(char *line, t_data *data)
 int	parse_file(const char *filename, t_data *data)
 {
 	int		fd;
+	int		i;
 	char	*line;
 
+	i = -7;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
+		// perror("Error\n");
 		perror("Erreur ouverture fichier");
 		return (1);
 	}
 	while ((line = get_next_line(fd)))
 	{
 		if (line[0] != '\n' && line[0] != '\0')
+		{
+			printf("Ligne %d:\n", i);
 			process_line(line, data);
+		}
+		i++;
 		free(line);
 	}
 	close(fd);

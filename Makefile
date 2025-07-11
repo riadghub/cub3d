@@ -5,6 +5,7 @@ SRCS = src/main.c \
 	src/clean.c \
 	src/map.c \
 	src/parse_map.c \
+	src/utils.c \
 	get_next_line/get_next_line.c \
 	get_next_line/get_next_line_utils.c
 
@@ -80,4 +81,9 @@ fclean : clean
 re : fclean all
 	@echo "$(GREEN)Rebuild complete!$(RESET)"
 
+dev : re
+		make clean
+		clear
+		valgrind -s --show-leak-kinds=all  --track-origins=yes --leak-check=full ./cub3D maps/map.cub
+		
 .PHONY: all clean fclean re run

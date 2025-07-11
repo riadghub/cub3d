@@ -50,5 +50,9 @@ void			cleanup_map(t_data *data);
 int				find_player(t_data *data);
 void			print_map(t_data *data);
 int				check_file_extension(char *filename);
+int				is_valid_wall(t_data *data);
+int				is_valid_content(t_data *data);
+int				is_valid_map(t_data *data);
+int				ft_tablen(char **str);
 
 #endif
