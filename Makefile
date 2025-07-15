@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/07/13 16:42:45 by lsadi             #+#    #+#              #
+#    Updated: 2025/07/15 15:30:02 by reeer-aa         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = cub3D
 
 SRCS = src/main.c \
@@ -5,7 +17,15 @@ SRCS = src/main.c \
 	src/clean.c \
 	src/map.c \
 	src/parse_map.c \
+	src/render.c \
+	src/game.c \
+	src/textures.c \
+	src/player.c \
+	src/draw.c \
+	src/ray.c \
 	src/utils.c \
+	src/is_valid.c \
+	src/flood_fill.c \
 	get_next_line/get_next_line.c \
 	get_next_line/get_next_line_utils.c
 
@@ -48,7 +68,7 @@ all: ${NAME}
 # Règle pour compiler la MiniLibX
 $(MLX):
 	@echo "$(CYAN)Compiling MiniLibX...$(RESET)"
-	@make -C $(MLX_DIR)
+	@make -C $(MLX_DIR) > /dev/null 2>&1
 	@echo "$(GREEN)MiniLibX compiled!$(RESET)"
 
 # Règle pour compiler libft
@@ -86,4 +106,4 @@ dev : re
 		clear
 		valgrind -s --show-leak-kinds=all  --track-origins=yes --leak-check=full ./cub3D maps/map.cub
 		
-.PHONY: all clean fclean re run
+.PHONY: all clean fclean re dev

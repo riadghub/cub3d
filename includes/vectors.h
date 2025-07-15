@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   vectors.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/11 11:34:46 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/15 14:46:11 by reeer-aa         ###   ########.fr       */
+/*   Created: 2025/07/14 15:40:08 by reeer-aa          #+#    #+#             */
+/*   Updated: 2025/07/15 13:48:53 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#ifndef VECTORS_H
+# define VECTORS_H
 
-int	ft_tablen(char **str)
-{
-	int	i;
+# include "cub3d.h"
+# include <math.h>
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
+# define MOVE_UP 'w'
+# define MOVE_DOWN 's'
+# define MOVE_LEFT 'a'
+# define MOVE_RIGHT 'd'
 
-int	has_wall_at(t_data *game, int x, int y)
-{
-	return ((game->map[y % TILESIZE][x % TILESIZE]) == '1');
-}
+void	draw_line(void *mlx, void *win, int beginX, int beginY, int endX,
+			int endY, int color);
+void	update(int key, t_data *game);
+double	get_rotation_angleY(t_data *data);
+double	get_rotation_angleX(t_data *data);
+
+#endif

@@ -38,25 +38,24 @@ static void	process_line(char *line, t_data *data)
 int	parse_file(const char *filename, t_data *data)
 {
 	int		fd;
-	int		i;
+	int		line_number;
 	char	*line;
 
-	i = -7;
+	line_number = 1;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 	{
-		// perror("Error\n");
-		perror("Erreur ouverture fichier");
+		perror("Error: ouverture fichier\n");
 		return (1);
 	}
-	while ((line = get_next_line(fd)))
+	while ((line EQUAL get_next_line(fd)))
 	{
 		if (line[0] != '\n' && line[0] != '\0')
 		{
-			printf("Ligne %d:\n", i);
+			printf("Ligne %d:\n", line_number);
 			process_line(line, data);
 		}
-		i++;
+		line_number++;
 		free(line);
 	}
 	close(fd);
@@ -84,21 +83,26 @@ int	is_color_line(char *line)
 		return (0);
 	return (ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0);
 }
+
 int	is_map_line(char *line)
 {
 	int	i;
+	int	has_map_chars;
 
 	if (!line)
 		return (0);
 	i = 0;
+	has_map_chars = 0;
 	while (line[i] && line[i] != '\n')
 	{
-		if (line[i] != '0' && line[i] != '1' && line[i] != 'N' && line[i] != 'S'
-			&& line[i] != 'E' && line[i] != 'W' && line[i] != ' ')
-			return (0);
+		if (line[i] == '0' || line[i] == '1' || line[i] == 'N' || line[i] == 'S'
+			|| line[i] == 'E' || line[i] == 'W')
+		{
+			has_map_chars = 1;
+		}
 		i++;
 	}
-	return (i > 0);
+	return (has_map_chars);
 }
 
 static int	get_rgb_value(char *rgb_str)
@@ -146,7 +150,7 @@ void	parse_texture_line(char *line, t_config *config)
 		return ;
 	}
 	path += 1;
-	path = ft_strtrim(path, " \t\n"); // Nettoyer les espaces et newlines
+	path = ft_strtrim(path, " \t\n");
 	if (ft_strncmp(line, "NO ", 3) == 0)
 		config->texture_north = path;
 	else if (ft_strncmp(line, "SO ", 3) == 0)
@@ -169,9 +173,9 @@ void	parse_color_line(char *line, t_config *config)
 		return ;
 	}
 	color_part += 1;
-	color_part = ft_strtrim(color_part, " \t\n"); // Nettoyer les espaces
+	color_part = ft_strtrim(color_part, " \t\n");
 	color_value = convert_rgb(color_part);
-	free(color_part); // Libérer la mémoire allouée par ft_strtrim
+	free(color_part);
 	if (color_value == -1)
 	{
 		printf("Erreur : couleur invalide.\n");

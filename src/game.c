@@ -1,0 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/14 11:27:40 by reeer-aa          #+#    #+#             */
+/*   Updated: 2025/07/15 14:17:00 by reeer-aa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
+
+int	handle_input(int key, t_data *game)
+{
+	if (key == 65307)
+		close_game(game);
+	if (key == MOVE_UP)
+		update(key, game);
+	if (key == MOVE_LEFT)
+		update(key, game);
+	if (key == MOVE_RIGHT)
+		update(key, game);
+	if (key == MOVE_DOWN)
+		update(key, game);
+	render_map(game);
+	return (0);
+}
+
+int	close_game(t_data *game)
+{
+	// free_textures(game);
+	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
+	if (game->map)
+		free_split(game->map);
+	exit(0);
+	return (0);
+}

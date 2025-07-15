@@ -43,7 +43,7 @@ void	add_map_line(t_data *data, char *line)
 	char	**new_map;
 	char	*trimmed_line;
 
-	trimmed_line = ft_strtrim(line, " \t\n");
+	trimmed_line = ft_strtrim(line, "\t\n");
 	if (!trimmed_line)
 		return ;
 	new_map = allocate_new_map(data, trimmed_line);
@@ -64,7 +64,7 @@ int	check_file_extension(char *filename)
 
 	if (!filename)
 		return (0);
-	len = ft_strlen(filename);
+	len = ft_str_len(filename);
 	if (len < 4)
 		return (0);
 	if (ft_strcmp(filename + len - 4, ".cub") != 0)
