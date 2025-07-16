@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:29:54 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/16 15:23:07 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/16 15:52:41 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ typedef struct s_ray
 	double				y;
 	double				rayAngle;
 	double				start_angle;
+	double				angle_step;
+	double				ray_angle;
+	double				end_x;
+	double				end_y;
+	double				step_x;
+	double				step_y;
 	t_data				*game;
 }						t_ray;
 
