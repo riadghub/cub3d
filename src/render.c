@@ -44,17 +44,18 @@ int	gamemlx(t_data *game, char *map, char *argv[])
 void	rendering(t_data *game, int x, int y)
 {
 	if (game->map[y][x] == '1')
-		mlx_put_image_to_window(game->mlx, game->win, game->config.wall, x
-			* TILESIZE, y * TILESIZE);
+		put_image_to_image(game->img, (t_img *)game->config.wall, x * TILESIZE,
+			y * TILESIZE);
 	else if (game->map[y][x] == '0')
-		mlx_put_image_to_window(game->mlx, game->win, game->config.floor, x
-			* TILESIZE, y * TILESIZE);
-	mlx_put_image_to_window(game->mlx, game->win, game->player.texture_player,
+		put_image_to_image(game->img, (t_img *)game->config.floor, x * TILESIZE,
+			y * TILESIZE);
+	put_image_to_image(game->img, (t_img *)game->player.texture_player,
 		game->player.x - ((t_img *)game->player.texture_player)->width / 2,
 		game->player.y - ((t_img *)game->player.texture_player)->height / 2);
-	draw_line(game->mlx, game->win, game->player.x, game->player.y,
-		get_rotation_angleX(game), get_rotation_angleY(game), 0xFF0000);
-	// mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+	draw_line(game->img, (int)game->player.x, (int)game->player.y,
+		(int)get_rotation_angleX(game), (int)get_rotation_angleY(game),
+		0xFF0000);
+	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 }
 
 void	render_map(t_data *game)
@@ -73,6 +74,7 @@ void	render_map(t_data *game)
 		}
 		y++;
 	}
+	render(game->ray);
 }
 
 void	destroy_all(t_data *game)

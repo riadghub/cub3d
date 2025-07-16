@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:29:54 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/16 11:37:04 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/16 15:23:07 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_ray
 	double				x;
 	double				y;
 	double				rayAngle;
+	double				start_angle;
 	t_data				*game;
 }						t_ray;
 
@@ -51,5 +52,11 @@ void					*load_texture(void *mlx, char *path);
 void					rendering(t_data *game, int x, int y);
 void					render_map(t_data *game);
 void					render(t_ray *ray);
+
+int						init_main_image(t_data *game);
+void					put_pixel_to_image(t_img *img, int x, int y, int color);
+void					put_image_to_image(t_img *dst, t_img *src, int x,
+							int y);
+void					clear_image(t_img *img, int color);
 
 #endif

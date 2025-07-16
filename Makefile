@@ -6,7 +6,7 @@
 #    By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/13 16:42:45 by lsadi             #+#    #+#              #
-#    Updated: 2025/07/16 12:42:32 by reeer-aa         ###   ########.fr        #
+#    Updated: 2025/07/16 14:33:57 by reeer-aa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS = src/main.c \
 	src/player.c \
 	src/draw.c \
 	src/ray.c \
+	src/image.c \
 	src/utils.c \
 	src/is_valid.c \
 	src/flood_fill.c \

@@ -1,30 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/16 14:53:32 by reeer-aa          #+#    #+#             */
+/*   Updated: 2025/07/16 14:53:48 by reeer-aa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 #define SIZE2 100
 
-void	draw_line(void *mlx, void *win, int beginX, int beginY, int endX,
+void	draw_line(t_img *img, int beginX, int beginY, int endX,
 		int endY, int color)
 {
-	int		pixels;
-	double	deltaX;
-	double	deltaY;
-	double	pixelX;
-	double	pixelY;
+	int	pixels;
 
+	double deltaX, deltaY;
+	double pixelX, pixelY;
 	deltaX = endX - beginX;
 	deltaY = endY - beginY;
 	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
+	if (pixels == 0)
+		return ;
 	deltaX /= pixels;
 	deltaY /= pixels;
 	pixelX = beginX;
 	pixelY = beginY;
-	while (pixels)
+	while (pixels > 0)
 	{
-		mlx_pixel_put(mlx, win, pixelX, pixelY, color);
-		// faire fonction au lieu de ca qui ecrit dans data->img
+		put_pixel_to_image(img, (int)pixelX, (int)pixelY, color);
 		pixelX += deltaX;
 		pixelY += deltaY;
-		--pixels;
+		pixels--;
 	}
 }
 
