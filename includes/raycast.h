@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/14 10:56:20 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/15 15:10:23 by reeer-aa         ###   ########.fr       */
+/*   Created: 2025/07/16 10:29:54 by reeer-aa          #+#    #+#             */
+/*   Updated: 2025/07/16 11:37:04 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ int						load_all_textures(t_data *game);
 void					destroy_all(t_data *game);
 void					free_textures(t_data *game);
 void					init_player(t_data *game);
+void					init_ray(t_data *game, double angle);
 void					*load_texture(void *mlx, char *path);
 void					rendering(t_data *game, int x, int y);
 void					render_map(t_data *game);
+void					render(t_ray *ray);
 
 #endif

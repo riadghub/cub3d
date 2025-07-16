@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/14 15:37:49 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/15 15:12:01 by reeer-aa         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3d.h"
 
 #define SIZE2 100
@@ -33,6 +21,7 @@ void	draw_line(void *mlx, void *win, int beginX, int beginY, int endX,
 	while (pixels)
 	{
 		mlx_pixel_put(mlx, win, pixelX, pixelY, color);
+		// faire fonction au lieu de ca qui ecrit dans data->img
 		pixelX += deltaX;
 		pixelY += deltaY;
 		--pixels;

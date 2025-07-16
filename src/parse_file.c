@@ -6,32 +6,38 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:45:37 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/11 12:11:33 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/16 10:58:57 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	process_line(char *line, t_data *data)
+static int	process_line(char *line, t_data *data)
 {
 	if (is_texture_line(line))
 	{
 		printf("Texture trouvée: %s", line);
-		parse_texture_line(line, &data->config);
+		if (!parse_texture_line(line, &data->config))
+			return (0);
+		return (1);
 	}
 	else if (is_color_line(line))
 	{
 		printf("Couleur trouvée: %s", line);
-		parse_color_line(line, &data->config);
+		if (!parse_color_line_safe(line, &data->config))
+			return (0);
+		return (1);
 	}
 	else if (is_map_line(line))
 	{
 		printf("Ligne de carte trouvée: %s", line);
 		add_map_line(data, line);
+		return (1);
 	}
 	else
 	{
 		printf("Ligne ignorée : %s", line);
+		return (1);
 	}
 }
 
@@ -48,12 +54,17 @@ int	parse_file(const char *filename, t_data *data)
 		perror("Error: ouverture fichier\n");
 		return (1);
 	}
-	while ((line EQUAL get_next_line(fd)))
+	while ((line = get_next_line(fd)))
 	{
 		if (line[0] != '\n' && line[0] != '\0')
 		{
 			printf("Ligne %d:\n", line_number);
-			process_line(line, data);
+			if (!process_line(line, data))
+			{
+				free(line);
+				close(fd);
+				return (1);
+			}
 		}
 		line_number++;
 		free(line);
@@ -139,7 +150,34 @@ static int	convert_rgb(char *line)
 	return (color);
 }
 
-void	parse_texture_line(char *line, t_config *config)
+int	parse_color_line_safe(char *line, t_config *config)
+{
+	char	*color_part;
+	int		color_value;
+
+	color_part = ft_strchr(line, ' ');
+	if (!color_part)
+	{
+		printf("Erreur : ligne de couleur invalide.\n");
+		return (0);
+	}
+	color_part += 1;
+	color_part = ft_strtrim(color_part, " \t\n");
+	color_value = convert_rgb(color_part);
+	free(color_part);
+	if (color_value == -1)
+	{
+		printf("Erreur : couleur invalide.\n");
+		return (0);
+	}
+	if (line[0] == 'F')
+		config->floor_color = color_value;
+	else if (line[0] == 'C')
+		config->ceiling_color = color_value;
+	return (1);
+}
+
+int	parse_texture_line(char *line, t_config *config)
 {
 	char	*path;
 
@@ -147,18 +185,58 @@ void	parse_texture_line(char *line, t_config *config)
 	if (!path)
 	{
 		printf("Erreur : ligne de texture invalide.\n");
-		return ;
+		return (0);
 	}
 	path += 1;
 	path = ft_strtrim(path, " \t\n");
+	if (!path)
+		return (0);
 	if (ft_strncmp(line, "NO ", 3) == 0)
+	{
+		if (config->texture_north)
+		{
+			printf("Error\nDuplicate North texture definition\n");
+			free(path);
+			return (0);
+		}
 		config->texture_north = path;
+	}
 	else if (ft_strncmp(line, "SO ", 3) == 0)
+	{
+		if (config->texture_south)
+		{
+			printf("Error\nDuplicate South texture definition\n");
+			free(path);
+			return (0);
+		}
 		config->texture_south = path;
+	}
 	else if (ft_strncmp(line, "WE ", 3) == 0)
+	{
+		if (config->texture_west)
+		{
+			printf("Error\nDuplicate West texture definition\n");
+			free(path);
+			return (0);
+		}
 		config->texture_west = path;
+	}
 	else if (ft_strncmp(line, "EA ", 3) == 0)
+	{
+		if (config->texture_est)
+		{
+			printf("Error\nDuplicate East texture definition\n");
+			free(path);
+			return (0);
+		}
 		config->texture_est = path;
+	}
+	else
+	{
+		free(path);
+		return (0);
+	}
+	return (1);
 }
 
 void	parse_color_line(char *line, t_config *config)

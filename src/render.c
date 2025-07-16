@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/14 11:16:37 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/15 14:01:13 by reeer-aa         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3d.h"
 
 void	init_size(t_data *game)
@@ -66,6 +54,7 @@ void	rendering(t_data *game, int x, int y)
 		game->player.y - ((t_img *)game->player.texture_player)->height / 2);
 	draw_line(game->mlx, game->win, game->player.x, game->player.y,
 		get_rotation_angleX(game), get_rotation_angleY(game), 0xFF0000);
+	// mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 }
 
 void	render_map(t_data *game)

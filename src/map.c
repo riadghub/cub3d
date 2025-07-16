@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:45:42 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/15 14:10:45 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:27:33 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,53 +93,23 @@ int	find_player(t_data *data)
 	char	player_direction;
 
 	count = count_players(data, &player_x, &player_y, &player_direction);
-	if (count == 1)
+	if (count == 0)
 	{
-		data->player.x = player_x;
-		data->player.y = player_y;
-		data->player.direction = player_direction;
-		data->map[player_y][player_x] = '0';
-		return (1);
+		printf("Error\nNo player found in map (N, S, E, or W required)\n");
+		return (0);
 	}
-	return (0);
+	else if (count > 1)
+	{
+		printf("Error\nMultiple players found (%d players). Only one allowed\n",
+			count);
+		return (0);
+	}
+	data->player.x = player_x;
+	data->player.y = player_y;
+	data->player.direction = player_direction;
+	data->map[player_y][player_x] = '0';
+	return (1);
 }
-
-// int is_valid_wall(t_data *data)
-// {
-//     int i;
-//     int j;
-
-//     // Vérifier première et dernière ligne
-//     i = 0;
-//     while (data->map[0][i])
-//     {
-//         if (data->map[0][i] != '1' && data->map[0][i] != ' ')
-//             return (0);
-//         i++;
-//     }
-
-//     i = data->map_height - 1;
-//     j = 0;
-//     while (data->map[i][j])
-//     {
-//         if (data->map[i][j] != '1' && data->map[i][j] != ' ')
-//             return (0);
-//         j++;
-//     }
-
-//     // Vérifier première et dernière colonne de chaque ligne
-//     i = 1;
-//     while (i < data->map_height - 1)
-//     {
-//         if (data->map[i][0] != '1' && data->map[i][0] != ' ')
-//             return (0);
-//         j = ft_strlen(data->map[i]) - 1;
-//         if (data->map[i][j] != '1' && data->map[i][j] != ' ')
-//             return (0);
-//         i++;
-//     }
-//     return (1);
-// }
 
 int	check_content(t_data *data)
 {
@@ -157,6 +127,9 @@ int	check_content(t_data *data)
 				&& data->map[i][j] != 'E' && data->map[i][j] != 'W'
 				&& data->map[i][j] != ' ')
 			{
+				printf("Error\n");
+				printf("Invalid character '%c' at line %d, column %d\n",
+					data->map[i][j], i + 1, j + 1);
 				return (0);
 			}
 			j++;
@@ -165,10 +138,3 @@ int	check_content(t_data *data)
 	}
 	return (1);
 }
-
-// int	is_valid_map(t_data *data)
-// {
-// 	if (find_player(data) && is_valid_wall(data) && is_valid_content(data))
-// 		return (1);
-// 	return (0);
-// }

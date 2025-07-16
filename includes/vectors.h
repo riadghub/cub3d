@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   vectors.h                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/14 15:40:08 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/15 13:48:53 by reeer-aa         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef VECTORS_H
 # define VECTORS_H
 
@@ -20,6 +8,10 @@
 # define MOVE_DOWN 's'
 # define MOVE_LEFT 'a'
 # define MOVE_RIGHT 'd'
+# define ARROW_UP    XK_Up      // = 65362
+# define ARROW_DOWN  XK_Down    // = 65364
+# define ARROW_LEFT  XK_Left    // = 65361  
+# define ARROW_RIGHT XK_Right   // = 65363
 
 void	draw_line(void *mlx, void *win, int beginX, int beginY, int endX,
 			int endY, int color);

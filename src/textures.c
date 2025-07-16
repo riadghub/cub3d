@@ -1,25 +1,25 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   textures.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/14 11:52:10 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/14 15:02:04 by reeer-aa         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "cub3d.h"
 
-void	*load_texture(void *mlx, char *path)
+void *load_texture(void *mlx, char *path)
 {
-	int		width;
-	int		height;
-	void	*texture;
+    int width, height;
+    void *texture;
 
-	texture = mlx_xpm_file_to_image(mlx, path, &width, &height);
-	return (texture);
+    if (!path)
+    {
+        printf("Error\nTexture path is NULL\n");
+        exit(1);
+    }
+
+    texture = mlx_xpm_file_to_image(mlx, path, &width, &height);
+    if (!texture)
+    {
+        printf("Error\nFailed to load texture: %s\n", path);
+        printf("Make sure the file exists and is a valid XMP file\n");
+        exit(1);
+    }
+
+    return (texture);
 }
 
 int	load_all_textures(t_data *game)

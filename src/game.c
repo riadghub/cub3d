@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/14 11:27:40 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/15 14:17:00 by reeer-aa         ###   ########.fr       */
+/*   Created: 2025/07/16 10:30:05 by reeer-aa          #+#    #+#             */
+/*   Updated: 2025/07/16 12:11:02 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ int	handle_input(int key, t_data *game)
 {
 	if (key == 65307)
 		close_game(game);
-	if (key == MOVE_UP)
+	if (key == MOVE_UP || key == ARROW_UP)
 		update(key, game);
-	if (key == MOVE_LEFT)
+	if (key == MOVE_LEFT || key == ARROW_LEFT)
 		update(key, game);
-	if (key == MOVE_RIGHT)
+	if (key == MOVE_RIGHT || key == ARROW_RIGHT)
 		update(key, game);
-	if (key == MOVE_DOWN)
+	if (key == MOVE_DOWN || key == ARROW_DOWN)
 		update(key, game);
 	render_map(game);
 	return (0);
