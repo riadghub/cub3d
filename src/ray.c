@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 11:25:07 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/16 15:53:14 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:41:52 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,6 @@ void	init_ray(t_data *game, double angle)
 	game->ray->rayAngle = normalize_angle(angle);
 }
 
-// void	render(t_ray *ray)
-// {
-// 	int		i;
-// 	double	angle_step;
-// 	double	ray_angle;
-// 	double	end_x;
-// 	double	end_y;
-
-// 	ray->start_angle = ray->game->player.rotationAngle - (FOV / 2);
-// 	angle_step = FOV / NUM_RAYS;
-// 	i = 0;
-// 	while (i < NUM_RAYS)
-// 	{
-// 		ray_angle = ray->start_angle + i * angle_step;
-// 		ray_angle = normalize_angle(ray_angle);
-// 		end_x = ray->game->player.x + cos(ray_angle) * 100;
-// 		end_y = ray->game->player.y + sin(ray_angle) * 100;
-// 		draw_line(ray->game->img, (int)ray->game->player.x,
-// 			(int)ray->game->player.y, (int)end_x, (int)end_y, 0xFF0000);
-// 		i++;
-// 	}
-// }
-
 void	render(t_ray *ray)
 {
 	int	i;
@@ -56,7 +33,7 @@ void	render(t_ray *ray)
 	int	map_x;
 	int	map_y;
 
-	max_distance = 500;
+	max_distance = 300;
 	ray->start_angle = ray->game->player.rotationAngle - (FOV / 2);
 	ray->angle_step = FOV / NUM_RAYS;
 	i = 0;
@@ -79,6 +56,8 @@ void	render(t_ray *ray)
 				|| map_y >= WINDOW_HEIGHT
 				|| ray->game->map[map_y][map_x] == '1')
 			{
+				ray->distance = sqrt(pow(ray->end_x - ray->game->player.x, 2)
+						+ pow(ray->end_y - ray->game->player.y, 2));
 				break ;
 			}
 			steps++;

@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 14:33:27 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/16 15:10:45 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:18:52 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,24 @@ int	init_main_image(t_data *game)
 void	put_pixel_to_image(t_img *img, int x, int y, int color)
 {
 	int		offset;
-	char	*pixel;
+	// char	*pixel;
 
 	if (!img || !img->data || x < 0 || y < 0 || x >= WINDOW_WIDTH
 		|| y >= WINDOW_HEIGHT)
 		return ;
-	offset = (y * img->size_line) + (x * (img->bpp / 8));
-	pixel = img->data + offset;
-	if (img->bpp == 32)
-		*(unsigned int *)pixel = color;
-	else if (img->bpp == 24)
-	{
-		pixel[0] = (color & 0xFF);
-		pixel[1] = (color >> 8) & 0xFF;
-		pixel[2] = (color >> 16) & 0xFF;
-	}
-	else if (img->bpp == 16)
-		*(unsigned short *)pixel = color;
+	offset = (y * img->size_line / 4) + (x);
+	((int *)img->data)[offset] = color;
+	// pixel = img->data + offset;
+	// if (img->bpp == 32)
+	// 	*(unsigned int *)pixel = color;
+	// else if (img->bpp == 24)
+	// {
+	// 	pixel[0] = (color & 0xFF);
+	// 	pixel[1] = (color >> 8) & 0xFF;
+	// 	pixel[2] = (color >> 16) & 0xFF;
+	// }
+	// else if (img->bpp == 16)
+	// 	*(unsigned short *)pixel = color;
 }
 
 void	put_image_to_image(t_img *dst, t_img *src, int x, int y)
@@ -85,20 +86,3 @@ void	put_image_to_image(t_img *dst, t_img *src, int x, int y)
 	}
 }
 
-void	clear_image(t_img *img, int color)
-{
-	int x, y;
-	if (!img || !img->data)
-		return ;
-	y = 0;
-	while (y < WINDOW_HEIGHT)
-	{
-		x = 0;
-		while (x < WINDOW_WIDTH)
-		{
-			put_pixel_to_image(img, x, y, color);
-			x++;
-		}
-		y++;
-	}
-}

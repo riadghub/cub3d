@@ -54,7 +54,7 @@ void	rendering(t_data *game, int x, int y)
 		game->player.y - ((t_img *)game->player.texture_player)->height / 2);
 	draw_line(game->img, (int)game->player.x, (int)game->player.y,
 		(int)get_rotation_angleX(game), (int)get_rotation_angleY(game),
-		0xFF0000);
+		0x00FFFF);
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 }
 

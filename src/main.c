@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:45:47 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/16 15:22:14 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/17 10:08:15 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int	main(int ac, char **av)
 	map = NULL;
 	if (ac != 2 || !check_file_extension(av[1]))
 		return (printf("usage: %s <map.cub>\n", av[0]), 1);
-	printf("We init.\n");
 	init_data(&data);
 	if (parse_file(av[1], &data))
 	{

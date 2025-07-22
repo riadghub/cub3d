@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 14:53:32 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/16 14:53:48 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/22 11:41:58 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 #define SIZE2 100
 
-void	draw_line(t_img *img, int beginX, int beginY, int endX,
-		int endY, int color)
+void	draw_line(t_img *img, int beginX, int beginY, int endX, int endY,
+		int color)
 {
 	int	pixels;
 
