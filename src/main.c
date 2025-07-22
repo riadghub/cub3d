@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:45:47 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/17 10:08:15 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/22 13:50:02 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int	main(int ac, char **av)
 	render_map(&data);
 	mlx_hook(data.win, 17, 0, close_game, &data);
 	mlx_hook(data.win, 2, 1L << 0, handle_input, &data);
+	mlx_loop_hook(data.mlx, main_loop, &data);
 	mlx_loop(data.mlx);
 	cleanup_data(&data);
 	return (0);

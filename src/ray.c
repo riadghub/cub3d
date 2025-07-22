@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 11:25:07 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/22 11:41:52 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:24:33 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ void	render(t_ray *ray)
 	int	max_distance;
 	int	map_x;
 	int	map_y;
+	int	line_height;
+	int	draw_begin;
+	int	draw_end;
 
-	max_distance = 300;
+	max_distance = 3000;
 	ray->start_angle = ray->game->player.rotationAngle - (FOV / 2);
 	ray->angle_step = FOV / NUM_RAYS;
 	i = 0;
@@ -62,9 +65,17 @@ void	render(t_ray *ray)
 			}
 			steps++;
 		}
-		draw_line(ray->game->img, (int)ray->game->player.x,
-			(int)ray->game->player.y, (int)ray->end_x, (int)ray->end_y,
-			0xFF0000);
+		line_height = (64 / ray->distance) * D;
+		draw_begin = (WINDOW_HEIGHT / 2) - (line_height / 2);
+		draw_end = draw_begin + line_height;
+		if (draw_end > WINDOW_HEIGHT)
+			draw_end = WINDOW_HEIGHT;
+		draw_line(ray->game->img, i, 0, i, draw_end, 0x9eedfc);
+		// CIEL
+		draw_line(ray->game->img, i, draw_end + 1, i, WINDOW_HEIGHT, 0xcfcfcf);
+		// SOL
+		draw_line(ray->game->img, i, draw_begin, i, draw_end, 0x3b2b65);
+		// MUR
 		i++;
 	}
 }

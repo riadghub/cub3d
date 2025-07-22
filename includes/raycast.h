@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:29:54 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/22 11:42:24 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:09:55 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 # define WINDOW_WIDTH (COLS * TILESIZE)
 # define WINDOW_HEIGHT (ROWS * TILESIZE)
 # define D WINDOW_WIDTH / (tan(30))
-# define WALL_HEIGHT (40 / distance) * D
 # define FOV 60 * (M_PI / 180)
 # define RES 1
 # define NUM_RAYS WINDOW_WIDTH
 # define WALL_PATH "textures/wall.xpm"
 # define FLOOR_PATH "textures/tile.xpm"
 # define PLAYER_PATH "textures/red_dot.xpm"
+
 typedef struct s_data	t_data;
 
 typedef struct s_ray
@@ -58,7 +58,7 @@ void					free_textures(t_data *game);
 void					init_player(t_data *game);
 void					init_ray(t_data *game, double angle);
 void					*load_texture(void *mlx, char *path);
-void					rendering(t_data *game, int x, int y);
+void					rendering(t_data *game, int x);
 void					render_map(t_data *game);
 void					render(t_ray *ray);
 

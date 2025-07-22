@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 16:41:33 by lsadi             #+#    #+#             */
-/*   Updated: 2025/07/22 11:13:02 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/22 13:50:50 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void			init_data(t_data *data);
 void			print_config(t_config *config);
 int				check_file_extension(char *filename);
 void			cleanup_data(t_data *data);
+int				main_loop(t_data *game);
 
 // Validation des bordures
 int				check_line(t_data *data, int line_index);
