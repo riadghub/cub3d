@@ -66,20 +66,32 @@ typedef struct s_data
 	t_img		*img;
 }				t_data;
 
+// ========== FONCTIONS DEV ==========
+
+// void	print_texture(char *name, char *texture);
+// void	print_textures(t_config *config);
+// void	print_config(t_config *config);
+// void	print_map(t_data *data);
+
 // ========== FONCTIONS DE PARSING ==========
 int				parse_file(const char *filename, t_data *data);
-void			parse_color_line(char *line, t_config *config);
-int				parse_color_line_safe(char *line, t_config *config);
-int				parse_texture_line(char *line, t_config *config);
+int 			process_line(char *line, t_data *data);
 int				is_color_line(char *line);
+int				get_rgb_value(char *rgb_str);
+int				convert_rgb(char *line);
+int 			parse_color_line(char *line, t_config *config);
 int				is_texture_line(char *line);
+int				parse_texture_line(char *line, t_config *config);
+char 			*extract_texture_path(char *trimmed);
+int 			assign_texture(char *trimmed, char *path, t_config *config);
+int 			assign_texture_by_direction(t_config *config, char *path, char *direction);
 int				is_map_line(char *line);
+int 			validate_order(t_data *data);
 
 // ========== FONCTIONS DE GESTION DE CARTE ==========
 void			add_map_line(t_data *data, char *line);
 void			cleanup_map(t_data *data);
 int				find_player(t_data *data);
-void			print_map(t_data *data);
 
 // ========== FONCTIONS DE VALIDATION ==========
 int				check_walls(t_data *data);
@@ -91,7 +103,6 @@ int				check_content(t_data *data);
 
 // ========== FONCTIONS PRINCIPALES ==========
 void			init_data(t_data *data);
-void			print_config(t_config *config);
 int				check_file_extension(char *filename);
 void			cleanup_data(t_data *data);
 int				main_loop(t_data *game);

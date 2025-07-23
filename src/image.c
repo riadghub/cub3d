@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 14:33:27 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/22 14:20:27 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/23 10:09:10 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	put_pixel_to_image(t_img *img, int x, int y, int color)
 {
 	int	offset;
 
-	// char	*pixel;
 	if (!img || !img->data || x < 0 || y < 0 || x >= WINDOW_WIDTH
 		|| y >= WINDOW_HEIGHT)
 		return ;

@@ -22,8 +22,8 @@ int check_line(t_data *data, int line_index)
     len = ft_str_len(line);
     if (len < 3)
     {
-        printf("Error\nBorder line %d too short: minimum 3 characters required\n", 
-            line_index + 1);
+        //printf("Error: Border line %d too short: minimum 3 characters required\n", 
+            //line_index + 1);
         return (0);
     }
     
@@ -61,25 +61,15 @@ int check_walls(t_data *data)
 	int i;
 
 	if (!check_line(data, 0))
-	{
-		printf("Error\nFirst line of map must contain only walls (1) and spaces\n");
-		return (0);
-	}
-	
+		return (printf("Error: First line of map must contain only walls (1) and spaces\n"), 0);
 	if (!check_line(data, data->map_height - 1))
-	{
-		printf("Error\nLast line of map must contain only walls (1) and spaces\n");
-		return (0);
-	}
-
+		//return (printf("Error: Last line of map must contain only walls (1) and spaces\n"), 0);
+		return(0);
 	i = 1;
 	while (i < data->map_height - 1)
 	{
 		if (!check_sides(data, i))
-		{
-			printf("Error\nMap not closed: line %d borders must be walls (1)\n", i + 1);
-			return (0);
-		}
+			return (printf("Error: Map not closed: line %d borders must be walls (1)\n", i + 1), 0);
 		i++;
 	}
 	return (1);
@@ -124,7 +114,7 @@ int check_spaces(t_data *data)
 			{
 				if (!check_around(data, x, y))
 				{
-					printf("Error\nInvalid space at line %d, column %d: spaces must be surrounded by walls or other spaces\n", 
+					printf("Error: Invalid space at line %d, column %d: spaces must be surrounded by walls or other spaces\n", 
 						y + 1, x + 1);
 					return (0);
 				}
@@ -152,25 +142,13 @@ int	file_exists(char *filename)
 int check_files(t_config *config)
 {
 	if (!file_exists(config->texture_north))
-	{
-		printf("Error\nNorth texture file not found: %s\n", config->texture_north);
-		return (0);
-	}
+		return (printf("Error: North texture file not found: %s\n", config->texture_north), 0);
 	if (!file_exists(config->texture_south))
-	{
-		printf("Error\nSouth texture file not found: %s\n", config->texture_south);
-		return (0);
-	}
+		return (printf("Error: South texture file not found: %s\n", config->texture_south),0);
 	if (!file_exists(config->texture_west))
-	{
-		printf("Error\nWest texture file not found: %s\n", config->texture_west);
-		return (0);
-	}
+		return (printf("Error: West texture file not found: %s\n", config->texture_west),0);
 	if (!file_exists(config->texture_est))
-	{
-		printf("Error\nEast texture file not found: %s\n", config->texture_est);
-		return (0);
-	}
+		return (printf("Error: East texture file not found: %s\n", config->texture_est),0);
 	return (1);
 }
 
@@ -194,38 +172,35 @@ int check_player_not_trapped(t_data *data)
 		accessible_neighbors++;
 
 	if (accessible_neighbors == 0)
-	{
-		printf("Error\nPlayer is trapped: no accessible spaces around player position\n");
-		return (0);
-	}
-
+		return (printf("Error: Player is trapped: no accessible spaces around player position\n"), 0);
 	return (1);
 }
 
 int check_map(t_data *data)
 {
 	if (!data->map || data->map_height == 0)
-		return (printf("Error\nEmpty map\n"), 0);
+		return (printf("Error: Empty map\n"), 0);
 	if (data->config.floor_color == -1)
-		return (printf("Error\nMissing floor color (F)\n"), 0);
+		return (printf("Error: Missing floor color (F)\n"), 0);
 	if (data->config.ceiling_color == -1)
-		return (printf("Error\nMissing ceiling color (C)\n"), 0);
+		return (printf("Error: Missing ceiling color (C)\n"), 0);
 	if (!data->config.texture_north || !data->config.texture_south || 
 			!data->config.texture_west || !data->config.texture_est)
-		return (printf("Error\nMissing texture(s)\n"), 0);
+		return (printf("Error: Missing texture(s)\n"), 0);
 	if (!check_content(data))
-		return (printf("Error\nInvalid characters in map\n"), 0);
+		return (printf("Error: Invalid characters in map\n"), 0);
 	if (!find_player(data))
-		return (printf("Error\nNo player or multiple players found\n"), 0);
+		//return (printf("Error: No player or multiple players found\n"), 0);
+		return(0);
 	if (!check_walls(data))
-		return (printf("Error\nMap is not closed by walls\n"), 0);
+		return (printf("Error: Map is not closed by walls\n"), 0);
 	if (!check_spaces(data))
-		return (printf("Error\nInvalid space configuration\n"), 0);
+		return (printf("Error: Invalid space configuration\n"), 0);
 	if (!check_player_not_trapped(data))
 		return (0);
 	if (!check_path(data))
-		return (printf("Error\nPlayer area is not properly enclosed\n"), 0);
+		return (printf("Error: Player area is not properly enclosed\n"), 0);
 	if (!check_files(&data->config))
-		return (printf("Error\nTexture files not found\n"), 0);
+		return (printf("Error: Texture files not found\n"), 0);
 	return (1);
 }

@@ -12,28 +12,6 @@
 
 #include "cub3d.h"
 
-void	print_map(t_data *data)
-{
-	int	i;
-
-	printf("=== CARTE ===\n");
-	printf("Dimensions: %d x %d\n", data->map_width, data->map_height);
-	printf("Joueur: (%f, %f) direction '%c'\n", data->player.x, data->player.y,
-		data->player.direction);
-	if (!data->map)
-	{
-		printf("ERREUR: data->map est NULL!\n");
-		return ;
-	}
-	i = 0;
-	while (i < data->map_height)
-	{
-		printf("[%d] %s\n", i, data->map[i]);
-		i++;
-	}
-	printf("============\n");
-}
-
 void	cleanup_map(t_data *data)
 {
 	int	i;
@@ -94,16 +72,10 @@ int	find_player(t_data *data)
 
 	count = count_players(data, &player_x, &player_y, &player_direction);
 	if (count == 0)
-	{
-		printf("Error\nNo player found in map (N, S, E, or W required)\n");
-		return (0);
-	}
+		return (printf("Error: No player found in map (N, S, E, or W required)\n"), 0);
 	else if (count > 1)
-	{
-		printf("Error\nMultiple players found (%d players). Only one allowed\n",
-			count);
-		return (0);
-	}
+		return (printf("Error: Multiple players found (%d players). Only one allowed\n",
+			count), 0);
 	data->player.x = player_x;
 	data->player.y = player_y;
 	data->player.direction = player_direction;
@@ -127,7 +99,7 @@ int	check_content(t_data *data)
 				&& data->map[i][j] != 'E' && data->map[i][j] != 'W'
 				&& data->map[i][j] != ' ')
 			{
-				printf("Error\n");
+				printf("Error: ");
 				printf("Invalid character '%c' at line %d, column %d\n",
 					data->map[i][j], i + 1, j + 1);
 				return (0);

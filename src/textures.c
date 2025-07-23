@@ -7,14 +7,14 @@ void *load_texture(void *mlx, char *path)
 
     if (!path)
     {
-        printf("Error\nTexture path is NULL\n");
+        printf("Error: Texture path is NULL\n");
         exit(1);
     }
 
     texture = mlx_xpm_file_to_image(mlx, path, &width, &height);
     if (!texture)
     {
-        printf("Error\nFailed to load texture: %s\n", path);
+        printf("Error: Failed to load texture: %s\n", path);
         printf("Make sure the file exists and is a valid XMP file\n");
         exit(1);
     }
@@ -39,7 +39,7 @@ int	load_all_textures(t_data *game)
 	// 	|| !game->textures.player_up || !game->textures.exit
 	// 	|| !game->textures.floor)
 	// {
-	// 	ft_printf("Error\nFailed to load texture.\n");
+	// 	ft_printf("Error: Failed to load texture.\n");
 	// 	return (0);
 	// }
 	return (1);

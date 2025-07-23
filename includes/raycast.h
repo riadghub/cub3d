@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:29:54 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/22 14:09:55 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/23 15:15:40 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # define TILESIZE 48
 # define ROWS 10
 # define COLS 15
-# define WINDOW_WIDTH (COLS * TILESIZE)
-# define WINDOW_HEIGHT (ROWS * TILESIZE)
+# define WINDOW_WIDTH 1080
+# define WINDOW_HEIGHT 720
 # define D WINDOW_WIDTH / (tan(30))
 # define FOV 60 * (M_PI / 180)
 # define RES 1
@@ -37,7 +37,6 @@ typedef struct s_ray
 	double				x;
 	double				y;
 	double				distance;
-	double				rayAngle;
 	double				start_angle;
 	double				angle_step;
 	double				ray_angle;
@@ -45,6 +44,10 @@ typedef struct s_ray
 	double				end_y;
 	double				step_x;
 	double				step_y;
+	int					map_x;
+	int					map_y;
+	double				side_dist_x;
+	double				side_dist_y;
 	t_data				*game;
 }						t_ray;
 

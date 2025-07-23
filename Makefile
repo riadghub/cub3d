@@ -6,7 +6,7 @@
 #    By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/13 16:42:45 by lsadi             #+#    #+#              #
-#    Updated: 2025/07/22 11:42:34 by reeer-aa         ###   ########.fr        #
+#    Updated: 2025/07/16 14:33:57 by reeer-aa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,10 @@ SRCS = src/main.c \
 	src/utils.c \
 	src/is_valid.c \
 	src/flood_fill.c \
+	src/parse_texture.c \
+	src/parse_color.c \
 	get_next_line/get_next_line.c \
-	get_next_line/get_next_line_utils.c
+	get_next_line/get_next_line_utils.c 
 
 HEADERS = ./includes/
 
