@@ -40,18 +40,32 @@ typedef struct s_config
 	int			ceiling_color;
 }				t_config;
 
+// typedef struct s_player
+// {
+// 	double		x;
+// 	double		y;
+// 	int			turnDirection;
+// 	int			walkDirection;
+// 	double		rotationSpeed;
+// 	double		rotationAngle;
+// 	double		moveSpeed;
+// 	char 		direction; // N, S, E, W
+// 	char		*texture_player;
+// }				t_player;
+
 typedef struct s_player
 {
-	double		x;
-	double		y;
-	int			turnDirection;
-	int			walkDirection;
-	double		rotationSpeed;
-	double		rotationAngle;
-	double		moveSpeed;
-	char direction; // N, S, E, W
-	char		*texture_player;
-}				t_player;
+    double 		pos[2];          // [X, Y] - Position en pixels
+    double 		dir[2];          // [X, Y] - Vecteur direction normalisé
+    double 		plane[2];        // [X, Y] - Plan perpendiculaire à dir pour FOV
+    int 		turnDirection;      // -1, 0, 1 pour rotation
+    int 		walkDirection;      // -1, 0, 1 pour mouvement
+    double 		moveSpeed;       // Vitesse de déplacement
+    double 		rotationSpeed;   // Vitesse de rotation
+    char 		direction;         // N, S, E, W (pour le parsing initial)
+    char 		*texture_player;   // Texture du joueur
+} 				t_player;
+
 
 typedef struct s_data
 {
@@ -62,7 +76,6 @@ typedef struct s_data
 	int			map_width;
 	int			map_height;
 	t_player	player;
-	t_ray		*ray;
 	t_img		*img;
 }				t_data;
 
