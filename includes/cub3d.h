@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 16:41:33 by lsadi             #+#    #+#             */
-/*   Updated: 2025/07/25 12:13:08 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/25 13:53:41 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ typedef struct s_config
 	int			last_wall_hit;
 	double		wall_hit_x;
 	double		wall_hit_y;
+	double		distance;
+	int			step_x;
+	int			step_y;
 }				t_config;
 
 // typedef struct s_player

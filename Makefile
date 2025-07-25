@@ -6,7 +6,7 @@
 #    By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/13 16:42:45 by lsadi             #+#    #+#              #
-#    Updated: 2025/07/16 14:33:57 by reeer-aa         ###   ########.fr        #
+#    Updated: 2025/07/25 14:05:42 by reeer-aa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,17 @@ SRCS = src/main.c \
 	src/parse_file.c \
 	src/clean.c \
 	src/map.c \
+	src/minimap.c \
 	src/parse_map.c \
 	src/render.c \
+	src/render_utils.c \
 	src/game.c \
 	src/textures.c \
+	src/texture_utils.c \
 	src/player.c \
 	src/draw.c \
 	src/ray.c \
+	src/ray_utils.c \
 	src/image.c \
 	src/utils.c \
 	src/is_valid.c \
