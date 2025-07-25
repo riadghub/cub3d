@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:29:54 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/23 15:13:37 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:54:59 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,17 @@ void					*load_texture(void *mlx, char *path);
 void					rendering(t_data *game, int x);
 void					render_map(t_data *game);
 
-int blend_colors(int color1, int color2, double alpha);
-void draw_wall_column(t_data *game, int x, double distance);
-void render(t_data *game);
-double cast_ray_dda(t_data *game, double ray_dir_x, double ray_dir_y);
-void put_pixel(t_data *game, int x, int y, int color);
-int blend_colors(int color1, int color2, double alpha);
-void render_map(t_data *game);
-int darken_color(int original_color, double ratio);
+int						blend_colors(int color1, int color2, double alpha);
+int						get_texture_pixel(void *texture, int x, int y,
+							int tex_width, int tex_height);
+void					draw_wall_column(t_data *game, int x, double distance);
+void					render(t_data *game);
+double					cast_ray_dda(t_data *game, double ray_dir_x,
+							double ray_dir_y);
+void					put_pixel(t_data *game, int x, int y, int color);
+int						blend_colors(int color1, int color2, double alpha);
+void					render_map(t_data *game);
+int						darken_color(int original_color, double ratio);
 
 int						init_main_image(t_data *game);
 void					put_pixel_to_image(t_img *img, int x, int y, int color);
