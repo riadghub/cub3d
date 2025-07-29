@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:29:54 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/25 14:12:11 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/29 11:43:46 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void					destroy_all(t_data *game);
 void					free_textures(t_data *game);
 void					init_player(t_data *game);
 void					*load_texture(void *mlx, char *path);
-void					rendering(t_data *game, int x);
 void					render_map(t_data *game);
 void					initialize_ray_data(t_data *game, double ray_dir_x,
 							double ray_dir_y, int *map_x, int *map_y);
@@ -92,9 +91,5 @@ void					calculate_wall_hit_and_distance_x(t_data *game,
 							int map_x, double *perp_wall_dist);
 void					calculate_wall_hit_and_distance_y(t_data *game,
 							int map_y, double *perp_wall_dist);
-int						init_main_image(t_data *game);
-void					put_pixel_to_image(t_img *img, int x, int y, int color);
-void					put_image_to_image(t_img *dst, t_img *src, int x,
-							int y);
 
 #endif

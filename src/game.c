@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:30:05 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/23 14:12:48 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/29 12:03:27 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,7 @@ int	handle_input(int key, t_data *game)
 int	close_game(t_data *game)
 {
 	// free_textures(game);
-	mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
-	if (game->map)
-		free_split(game->map);
-	exit(0);
+	mlx_loop_end(game->mlx);
 	return (0);
 }
 

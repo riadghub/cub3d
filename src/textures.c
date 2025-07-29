@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 05:19:39 by lsadi             #+#    #+#             */
-/*   Updated: 2025/07/25 11:56:12 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/07/29 12:04:45 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,6 @@ int	load_all_textures(t_data *game)
 
 void	free_textures(t_data *game)
 {
-	if (game->config.wall)
-		mlx_destroy_image(game->mlx, game->config.wall);
-	if (game->player.texture_player)
-		mlx_destroy_image(game->mlx, game->player.texture_player);
 	if (game->config.texture_north_img)
 		mlx_destroy_image(game->mlx, game->config.texture_north_img);
 	if (game->config.texture_south_img)
@@ -75,6 +71,6 @@ void	free_textures(t_data *game)
 	// 	mlx_destroy_image(game->mlx, game->textures.collectible);
 	// if (game->textures.exit)
 	// 	mlx_destroy_image(game->mlx, game->textures.exit);
-	if (game->config.floor)
-		mlx_destroy_image(game->mlx, game->config.floor);
+	// if (game->config.floor)
+	// 	mlx_destroy_image(game->mlx, game->config.floor);
 }
