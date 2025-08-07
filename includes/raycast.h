@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:29:54 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/29 11:43:46 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:32:37 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,45 @@
 # define WALL_PATH "textures/wall.xpm"
 # define FLOOR_PATH "textures/tile.xpm"
 # define PLAYER_PATH "textures/red_dot.xpm"
-# define MINIMAP_SIZE 160
-# define MINIMAP_TILE_SIZE 20
+// # define MINIMAP_SIZE 160
+// # define MINIMAP_TILE_SIZE 20
 # define MINIMAP_MARGIN 20
-# define MINIMAP_PLAYER_SIZE 10
-# define MINIMAP_VIEW_RADIUS 10
+// # define MINIMAP_PLAYER_SIZE 10
+// # define MINIMAP_VIEW_RADIUS 10
+
+
+// ===== CONSTANTESMINIMAP =====
+#define MINIMAP_SIZE 200         	// taille
+#define MINIMAP_TILE_SIZE 15        // Tiles fines pour précision
+#define MINIMAP_PLAYER_SIZE 7       // Joueur
+#define MINIMAP_BORDER_SIZE 2       // Bordure fine
+#define MINIMAP_MARGIN 20           // Marge depuis les bords de l'écran
+#define MINIMAP_ALPHA 0.85          // Transparence
+
+// Couleurs modernes et contrastées
+#define COLOR_MINIMAP_BG     0x1a1a1a    // Fond sombre
+#define COLOR_MINIMAP_BORDER 0x4a4a4a    // Bordure gris foncé
+#define COLOR_WALL           0x606060    // Murs gris moyen
+#define COLOR_FLOOR          0xf0f0f0    // Sol blanc cassé
+#define COLOR_VOID           0x2a2a2a    // Vide gris très foncé
+#define COLOR_PLAYER         0xff6b35    // Orange vif pour le joueur
+#define COLOR_DIRECTION      0xff9500    // Orange clair pour la direction
+#define COLOR_FOV_LINE       0x3366cc    // Bleu pour les lignes de FOV
 
 typedef struct s_data	t_data;
 
 int						close_game(t_data *game);
 int						has_wall_at(t_data *game, int x, int y);
-int						handle_input(int key, t_data *game);
+
+int						key_press(int key, t_data *game);
+int 					key_release(int key, t_data *game);
+
 int						gamemlx(t_data *game, char *map, char *argv[]);
 int						load_all_textures(t_data *game);
 void					destroy_all(t_data *game);
 void					free_textures(t_data *game);
+void 					free_texture_paths(t_data *data);
+
 void					init_player(t_data *game);
 void					*load_texture(void *mlx, char *path);
 void					render_map(t_data *game);
@@ -91,5 +115,11 @@ void					calculate_wall_hit_and_distance_x(t_data *game,
 							int map_x, double *perp_wall_dist);
 void					calculate_wall_hit_and_distance_y(t_data *game,
 							int map_y, double *perp_wall_dist);
+int		get_tile_color(char tile);
+void	put_pixel_safe(t_data *game, int x, int y, int color);
+void	draw_circle_pixel(t_data *game, int center_x, int center_y, int color);
+void	calculate_minimap_coords(t_data *game, int *center_x, int *center_y);
+void	draw_tile_pixels(t_data *game, int x, int y, int color);
+void	draw_minimap_background(t_data *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 14:03:55 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/29 11:41:58 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/08/07 12:19:38 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,11 @@ void	perform_dda_loop(t_data *game, double delta_dist_x, double delta_dist_y,
 	{
 		update_side_and_map(&side_dist_x, &side_dist_y, delta_dist_x,
 			delta_dist_y, map_x, map_y, step_x, game->config.step_y, &side);
-		if (*map_x < 0 || *map_x >= game->map_width || *map_y < 0
-			|| *map_y >= game->map_height || game->map[*map_y][*map_x] == '1')
+		if (*map_x < 0 || *map_y < 0 || *map_y >= game->map_height)
+			hit = 1;
+		else if (*map_x >= (int)ft_strlen(game->map[*map_y]))
+			hit = 1; // Treat out-of-bounds as walls
+		else if (game->map[*map_y][*map_x] == '1')
 			hit = 1;
 	}
 	game->config.current_side = side;

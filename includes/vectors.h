@@ -12,12 +12,13 @@
 # define ARROW_DOWN XK_Down   // = 65364
 # define ARROW_LEFT XK_Left   // = 65361
 # define ARROW_RIGHT XK_Right // = 65363
+# define ESC_KEY XK_Escape  // = 65307
 
 void draw_line(t_data *game, int beginX, int beginY, int endX, int endY, int color);
-void	update(int key, t_data *game);
+void update(t_data *game);
 void 	rotate_player(t_data *game, double angle);
 
-double	get_rotation_angleY(t_data *data);
-double	get_rotation_angleX(t_data *data);
+double	get_rotation_angle_y(t_data *data);
+double	get_rotation_angle_x(t_data *data);
 
 #endif

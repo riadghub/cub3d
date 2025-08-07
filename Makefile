@@ -6,7 +6,7 @@
 #    By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/13 16:42:45 by lsadi             #+#    #+#              #
-#    Updated: 2025/07/29 11:46:10 by reeer-aa         ###   ########.fr        #
+#    Updated: 2025/08/07 12:38:49 by reeer-aa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,10 @@ SRCS = src/main.c \
 	src/image.c \
 	src/utils.c \
 	src/is_valid.c \
+	src/is_valid_utils.c \
+	src/is_valid_utils2.c \
 	src/flood_fill.c \
+	src/flood_fill_utils.c \
 	src/parse_texture.c \
 	src/parse_color.c \
 	get_next_line/get_next_line.c \
@@ -111,6 +114,6 @@ re : fclean all
 dev : re
 		make clean
 		clear
-		valgrind -s --show-leak-kinds=all  --track-origins=yes --leak-check=full ./cub3D maps/super.cub
+		valgrind --show-leak-kinds=all  --track-origins=yes --leak-check=full ./cub3D maps/super.cub
 		
 .PHONY: all clean fclean re dev

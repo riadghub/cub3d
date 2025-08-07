@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:45:42 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/29 11:44:17 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:48:20 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,18 @@ int	find_player(t_data *data)
 
 	count = count_players(data, &player_x, &player_y, &player_direction);
 	if (count == 0)
-		return (printf("Error: No player found in map (N, S, E, or W required)\n"), 0);
+	{
+		printf("Error: No player found in map (N, S, E, or W required)\n");
+		return (0);
+	}
 	else if (count > 1)
-		return (printf("Error: Multiple players found (%d players). Only one allowed\n",
-				count), 0);
-	data->player.pos[0] = player_x; // X → pos[0]
-	data->player.pos[1] = player_y; // Y → pos[1]
+	{
+		printf("Error: Multiple players found (%d players). Only one allowed\n",
+			count);
+		return (0);
+	}
+	data->player.pos[0] = player_x;
+	data->player.pos[1] = player_y;
 	data->player.direction = player_direction;
 	data->map[player_y][player_x] = '0';
 	return (1);

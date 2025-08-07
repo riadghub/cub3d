@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:45:37 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/29 11:43:07 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:52:15 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,18 @@ int	process_line(char *line, t_data *data)
 {
 	if (is_texture_line(line))
 	{
-		// printf("Texture trouvée: %s", line);
 		if (!parse_texture_line(line, &data->config))
 			return (0);
 		return (1);
 	}
 	else if (is_color_line(line))
 	{
-		// printf("Couleur trouvée: %s", line);
 		if (!parse_color_line(line, &data->config))
 			return (0);
 		return (1);
 	}
 	else if (is_map_line(line))
 	{
-		// printf("Ligne de carte trouvée: %s", line);
 		if (!validate_order(data))
 			return (0);
 		add_map_line(data, line);
@@ -56,11 +53,10 @@ int	parse_file(const char *filename, t_data *data)
 		perror("Error: ouverture fichier\n");
 		return (1);
 	}
-	while ((line = get_next_line(fd)))
+	while ((line EQUAL get_next_line(fd)))
 	{
 		if (line[0] != '\n' && line[0] != '\0')
 		{
-			// printf("Ligne %d:\n", line_number);
 			if (!process_line(line, data))
 			{
 				free(line);
@@ -74,6 +70,7 @@ int	parse_file(const char *filename, t_data *data)
 	}
 	close(fd);
 	get_next_line(-1);
+	free_textures(data);
 	return (0);
 }
 

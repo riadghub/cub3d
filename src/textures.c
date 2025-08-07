@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 05:19:39 by lsadi             #+#    #+#             */
-/*   Updated: 2025/07/29 12:04:45 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/08/07 10:56:13 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void	*load_texture(void *mlx, char *path)
 {
 	void	*texture;
+	int		width;
+	int		height;
 
-	int width, height;
 	if (!path)
 	{
 		printf("Error: Texture path is NULL\n");
@@ -49,6 +50,30 @@ int	load_all_textures(t_data *game)
 	return (1);
 }
 
+void	free_texture_paths(t_data *data)
+{
+	if (data->config.texture_north)
+	{
+		free(data->config.texture_north);
+		data->config.texture_north = NULL;
+	}
+	if (data->config.texture_south)
+	{
+		free(data->config.texture_south);
+		data->config.texture_south = NULL;
+	}
+	if (data->config.texture_west)
+	{
+		free(data->config.texture_west);
+		data->config.texture_west = NULL;
+	}
+	if (data->config.texture_est)
+	{
+		free(data->config.texture_est);
+		data->config.texture_est = NULL;
+	}
+}
+
 void	free_textures(t_data *game)
 {
 	if (game->config.texture_north_img)
@@ -59,18 +84,4 @@ void	free_textures(t_data *game)
 		mlx_destroy_image(game->mlx, game->config.texture_west_img);
 	if (game->config.texture_est_img)
 		mlx_destroy_image(game->mlx, game->config.texture_est_img);
-	// if (game->textures.player_down)
-	// 	mlx_destroy_image(game->mlx, game->textures.player_down);
-	// if (game->textures.player_left)
-	// 	mlx_destroy_image(game->mlx, game->textures.player_left);
-	// if (game->textures.player_right)
-	// 	mlx_destroy_image(game->mlx, game->textures.player_right);
-	// if (game->textures.player_up)
-	// 	mlx_destroy_image(game->mlx, game->textures.player_up);
-	// if (game->textures.collectible)
-	// 	mlx_destroy_image(game->mlx, game->textures.collectible);
-	// if (game->textures.exit)
-	// 	mlx_destroy_image(game->mlx, game->textures.exit);
-	// if (game->config.floor)
-	// 	mlx_destroy_image(game->mlx, game->config.floor);
 }

@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 16:41:33 by lsadi             #+#    #+#             */
-/*   Updated: 2025/07/29 11:43:32 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/08/07 10:58:58 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdbool.h>
 
 # define EQUAL =
 
@@ -53,37 +54,27 @@ typedef struct s_config
 	int				step_y;
 }					t_config;
 
-typedef struct s_door_state
-{
-	int				x;
-	int				y;
-	int is_open; // 0 = closed, 1 = open
-}					t_door_state;
-
-// typedef struct s_player
+// typedef struct s_door_state
 // {
-// 	double		x;
-// 	double		y;
-// 	int			turnDirection;
-// 	int			walkDirection;
-// 	double		rotationSpeed;
-// 	double		rotationAngle;
-// 	double		moveSpeed;
-// 	char 		direction; // N, S, E, W
-// 	char		*texture_player;
-// }				t_player;
+// 	int				x;
+// 	int				y;
+// 	int is_open; // 0 = closed, 1 = open
+// }					t_door_state;
 
 typedef struct s_player
 {
-	double pos[2];        // [X, Y] - Position en pixels
-	double dir[2];        // [X, Y] - Vecteur direction normalisé
-	double plane[2];      // [X, Y] - Plan perpendiculaire à dir pour FOV
-	int turnDirection;    // -1, 0, 1 pour rotation
-	int walkDirection;    // -1, 0, 1 pour mouvement
-	double moveSpeed;     // Vitesse de déplacement
-	double rotationSpeed; // Vitesse de rotation
-	char direction;       // N, S, E, W (pour le parsing initial)
-	char *texture_player; // Texture du joueur
+	double 			pos[2];        // [X, Y] - Position en pixels
+	double 			dir[2];        // [X, Y] - Vecteur direction normalisé
+	double 			plane[2];      // [X, Y] - Plan perpendiculaire à dir pour FOV
+	int 			turnDirection;    // -1, 0, 1 pour rotation
+	int 			walkDirection;    // -1, 0, 1 pour mouvement
+	double 			moveSpeed;     // Vitesse de déplacement
+	double 			rotationSpeed; // Vitesse de rotation
+	char 			direction;       // N, S, E, W (pour le parsing initial)
+	char 			*texture_player; // Texture du joueur
+	int 	spawnTileX;
+	int 	spawnTileY;
+	bool 	initial_phase;
 }					t_player;
 
 typedef struct s_data
@@ -96,8 +87,9 @@ typedef struct s_data
 	int				map_height;
 	t_player		player;
 	t_img			*img;
-	t_door_state	*doors;
+	// t_door_state	*doors;
 	int				door_count;
+	int	keys[65536];
 }					t_data;
 
 // ========== FONCTIONS DEV ==========
@@ -135,12 +127,16 @@ int					check_path(t_data *data);
 int					check_files(t_config *config);
 int					check_map(t_data *data);
 int					check_content(t_data *data);
+void 				convert_spaces_to_walls(t_data *data);
+int check_player_not_trapped(t_data *data);
+
 
 // ========== FONCTIONS PRINCIPALES ==========
 void				init_data(t_data *data);
 int					check_file_extension(char *filename);
-void				cleanup_data(t_data *data);
 int					main_loop(t_data *game);
+void				cleanup_data(t_data *data);
+void 				cleanup_mlx_data(t_data *data);
 
 // Validation des bordures
 int					check_line(t_data *data, int line_index);

@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 10:45:51 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/07/29 12:04:01 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/08/07 11:08:59 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,23 @@ void	cleanup_config(t_config *config, t_data *data)
 	}
 }
 
+void	cleanup_mlx_data(t_data *data)
+{
+	if (data->win && data->mlx)
+		mlx_destroy_window(data->mlx, data->win);
+	if (data->img && data->mlx)
+		mlx_destroy_image(data->mlx, data->img);
+	if (data->mlx)
+	{
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+	}
+}
+
 void	cleanup_data(t_data *data)
 {
-		// cleanup_config(&data->config, data);
 	free_textures(data);
-	mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_image(data->mlx, data->img);
-	mlx_destroy_display(data->mlx);
-	free(data->mlx);
+	free_texture_paths(data);
+	cleanup_mlx_data(data);
 	cleanup_map(data);
 }
