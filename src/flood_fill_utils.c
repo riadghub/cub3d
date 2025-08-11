@@ -56,13 +56,15 @@ int	check_path(t_data *data)
 {
 	char	**map_copy;
 	int		valid;
+	t_point	player_pos;
 
 	map_copy = copy_map(data);
 	if (!map_copy)
 		return (0);
 	valid = 1;
-	flood_fill(map_copy, data->player.pos[0], data->player.pos[1], data,
-		&valid);
+	player_pos.x = data->player.pos[0];
+	player_pos.y = data->player.pos[1];
+	flood_fill(map_copy, player_pos, data, &valid);
 	free_copy(map_copy, data->map_height);
 	return (valid);
 }

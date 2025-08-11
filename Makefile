@@ -6,7 +6,7 @@
 #    By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/13 16:42:45 by lsadi             #+#    #+#              #
-#    Updated: 2025/08/07 12:38:49 by reeer-aa         ###   ########.fr        #
+#    Updated: 2025/08/11 11:59:53 by reeer-aa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,9 @@ SRCS = src/main.c \
 	src/clean.c \
 	src/map.c \
 	src/minimap.c \
+	src/minimap_utils.c \
+	src/minimap_utils2.c \
+	src/minimap_utils3.c \
 	src/parse_map.c \
 	src/render.c \
 	src/render_utils.c \
@@ -36,6 +39,9 @@ SRCS = src/main.c \
 	src/flood_fill_utils.c \
 	src/parse_texture.c \
 	src/parse_color.c \
+	src/main_loop.c \
+	src/parse_texture1.c \
+	src/init_data.c \
 	get_next_line/get_next_line.c \
 	get_next_line/get_next_line_utils.c 
 

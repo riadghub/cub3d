@@ -31,35 +31,42 @@ void	cleanup_map(t_data *data)
 	data->map_width = 0;
 }
 
+static void	check_and_record_player(t_data *data, t_point pos, int *count)
+{
+	if (data->map[pos.y][pos.x] == 'N' || data->map[pos.y][pos.x] == 'S'
+		|| data->map[pos.y][pos.x] == 'E' || data->map[pos.y][pos.x] == 'W')
+	{
+		(*count)++;
+		if (*count == 1)
+		{
+			data->player.pos[0] = pos.x;
+			data->player.pos[1] = pos.y;
+			data->player.direction = data->map[pos.y][pos.x];
+		}
+	}
+}
+
 static int	count_players(t_data *data, int *player_x, int *player_y,
 		char *player_direction)
 {
-	int	count;
-	int	x;
-	int	y;
+	int		count;
+	t_point	pos;
 
-	y = 0;
 	count = 0;
-	while (y < data->map_height)
+	pos.y = 0;
+	while (pos.y < data->map_height)
 	{
-		x = 0;
-		while (data->map[y][x])
+		pos.x = 0;
+		while (data->map[pos.y][pos.x])
 		{
-			if (data->map[y][x] == 'N' || data->map[y][x] == 'S'
-				|| data->map[y][x] == 'E' || data->map[y][x] == 'W')
-			{
-				count++;
-				if (count == 1)
-				{
-					*player_x = x;
-					*player_y = y;
-					*player_direction = data->map[y][x];
-				}
-			}
-			x++;
+			check_and_record_player(data, pos, &count);
+			pos.x++;
 		}
-		y++;
+		pos.y++;
 	}
+	*player_x = (int)data->player.pos[0];
+	*player_y = (int)data->player.pos[1];
+	*player_direction = data->player.direction;
 	return (count);
 }
 

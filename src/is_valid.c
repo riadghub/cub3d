@@ -91,8 +91,8 @@ int	check_spaces(t_data *data)
 			{
 				if (!check_around(data, x, y))
 				{
-					printf("Error: Invalid space at line %d, column %d\n",
-						y + 1, x + 1);
+					printf("Error: Invalid space at line %d, column %d\n", y
+						+ 1, x + 1);
 					printf(": spaces must be surrounded by walls or spaces");
 					return (0);
 				}

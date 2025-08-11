@@ -12,29 +12,27 @@
 
 #include "cub3d.h"
 
-void	draw_line(t_data *game, int beginX, int beginY, int endX, int endY,
-		int color)
+void	draw_line(t_data *game, t_point begin, t_point end, int color)
 {
 	int		pixels;
 	double	delta_x;
 	double	delta_y;
-	double	pixel_x;
-	double	pixel_y;
+	t_point	current;
 
-	delta_x = endX - beginX;
-	delta_y = endY - beginY;
+	delta_x = end.x - begin.x;
+	delta_y = end.y - begin.y;
 	pixels = sqrt((delta_x * delta_x) + (delta_y * delta_y));
 	if (pixels == 0)
 		return ;
 	delta_x /= pixels;
 	delta_y /= pixels;
-	pixel_x = beginX;
-	pixel_y = beginY;
+	current.x = begin.x;
+	current.y = begin.y;
 	while (pixels > 0)
 	{
-		put_pixel(game, (int)pixel_x, (int)pixel_y, color);
-		pixel_x += delta_x;
-		pixel_y += delta_y;
+		put_pixel(game, (int)current.x, (int)current.y, color);
+		current.x += delta_x;
+		current.y += delta_y;
 		pixels--;
 	}
 }

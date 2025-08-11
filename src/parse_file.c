@@ -40,6 +40,21 @@ int	process_line(char *line, t_data *data)
 	}
 }
 
+static int	handle_file_line(char *line, t_data *data, int fd)
+{
+	if (line[0] != '\n' && line[0] != '\0')
+	{
+		if (!process_line(line, data))
+		{
+			free(line);
+			close(fd);
+			get_next_line(-1);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int	parse_file(const char *filename, t_data *data)
 {
 	int		fd;
@@ -55,16 +70,8 @@ int	parse_file(const char *filename, t_data *data)
 	}
 	while ((line EQUAL get_next_line(fd)))
 	{
-		if (line[0] != '\n' && line[0] != '\0')
-		{
-			if (!process_line(line, data))
-			{
-				free(line);
-				close(fd);
-				get_next_line(-1);
-				return (1);
-			}
-		}
+		if (handle_file_line(line, data, fd))
+			return (1);
 		line_number++;
 		free(line);
 	}

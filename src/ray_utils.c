@@ -12,51 +12,43 @@
 
 #include "cub3d.h"
 
-void	update_side_and_map(double *side_dist_x, double *side_dist_y,
-		double delta_dist_x, double delta_dist_y, int *map_x, int *map_y,
-		int step_x, int step_y, int *side)
+void	update_side_and_map(t_ray_data *ray, t_point *map_pos, int *side)
 {
-	if (*side_dist_x < *side_dist_y)
+	if (ray->side_dist_x < ray->side_dist_y)
 	{
-		*side_dist_x += delta_dist_x;
-		*map_x += step_x;
+		ray->side_dist_x += ray->delta_dist_x;
+		map_pos->x += ray->step_x;
 		*side = 0;
 	}
 	else
 	{
-		*side_dist_y += delta_dist_y;
-		*map_y += step_y;
+		ray->side_dist_y += ray->delta_dist_y;
+		map_pos->y += ray->step_y;
 		*side = 1;
 	}
 }
 
-void	perform_dda_loop(t_data *game, double delta_dist_x, double delta_dist_y,
-		int *map_x, int *map_y)
+void	perform_dda_loop(t_data *game, t_ray_data *ray, t_point *map_pos)
 {
-	int		hit;
-	int		side;
-	double	side_dist_x;
-	double	side_dist_y;
-	int		step_x;
+	int	hit;
+	int	side;
 
 	hit = 0;
-	calculate_step_and_side_dist_x(game, game->config.current_ray_dir_x,
-		delta_dist_x, &step_x, &side_dist_x);
-	calculate_step_and_side_dist_y(game, game->config.current_ray_dir_y,
-		delta_dist_y, &game->config.step_y, &side_dist_y);
+	calculate_step_and_side_dist_x(game, ray);
+	calculate_step_and_side_dist_y(game, ray);
 	while (hit == 0)
 	{
-		update_side_and_map(&side_dist_x, &side_dist_y, delta_dist_x,
-			delta_dist_y, map_x, map_y, step_x, game->config.step_y, &side);
-		if (*map_x < 0 || *map_y < 0 || *map_y >= game->map_height)
+		update_side_and_map(ray, map_pos, &side);
+		if (map_pos->x < 0 || map_pos->y < 0 || map_pos->y >= game->map_height)
 			hit = 1;
-		else if (*map_x >= (int)ft_strlen(game->map[*map_y]))
-			hit = 1; // Treat out-of-bounds as walls
-		else if (game->map[*map_y][*map_x] == '1')
+		else if (map_pos->x >= (int)ft_strlen(game->map[map_pos->y]))
+			hit = 1;
+		else if (game->map[map_pos->y][map_pos->x] == '1')
 			hit = 1;
 	}
 	game->config.current_side = side;
-	game->config.step_x = step_x;
+	game->config.step_x = ray->step_x;
+	game->config.step_y = ray->step_y;
 }
 
 void	calculate_wall_hit_and_distance_x(t_data *game, int map_x,
@@ -89,19 +81,18 @@ void	calculate_wall_hit_and_distance_y(t_data *game, int map_y,
 
 double	cast_ray_dda(t_data *game, double ray_dir_x, double ray_dir_y)
 {
-	int		map_x;
-	int		map_y;
-	double	delta_dist_x;
-	double	delta_dist_y;
-	double	perp_wall_dist;
+	t_point		map_pos;
+	t_ray_data	ray;
+	double		perp_wall_dist;
 
-	initialize_ray_data(game, ray_dir_x, ray_dir_y, &map_x, &map_y);
-	calculate_delta_distances(ray_dir_x, ray_dir_y, &delta_dist_x,
-		&delta_dist_y);
-	perform_dda_loop(game, delta_dist_x, delta_dist_y, &map_x, &map_y);
+	ray.ray_dir_x = ray_dir_x;
+	ray.ray_dir_y = ray_dir_y;
+	initialize_ray_data(game, &ray, &map_pos.x, &map_pos.y);
+	calculate_delta_distances(&ray);
+	perform_dda_loop(game, &ray, &map_pos);
 	if (game->config.current_side == 0)
-		calculate_wall_hit_and_distance_x(game, map_x, &perp_wall_dist);
+		calculate_wall_hit_and_distance_x(game, map_pos.x, &perp_wall_dist);
 	else
-		calculate_wall_hit_and_distance_y(game, map_y, &perp_wall_dist);
+		calculate_wall_hit_and_distance_y(game, map_pos.y, &perp_wall_dist);
 	return (perp_wall_dist * TILESIZE);
 }

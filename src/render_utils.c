@@ -12,20 +12,20 @@
 
 #include "cub3d.h"
 
-void	draw_wall_pixels(t_data *game, int x, void *texture, int draw_start,
-		int draw_end)
+void	draw_wall_pixels(t_data *game, int x, void *texture, t_point bounds)
 {
-	int	y;
-	int	tex_x;
-	int	color;
+	int		tex_x;
+	int		color;
+	t_point	pos;
 
 	calculate_texture_x(game, &tex_x, 64);
-	y = draw_start;
-	while (y < draw_end)
+	pos.x = tex_x;
+	while (bounds.x < bounds.y)
 	{
-		calculate_texture_y_and_color(game, texture, tex_x, y, &color);
-		put_pixel(game, x, y, color);
-		y++;
+		pos.y = bounds.x;
+		calculate_texture_y_and_color(game, texture, pos, &color);
+		put_pixel(game, x, bounds.x, color);
+		bounds.x++;
 	}
 }
 
@@ -53,9 +53,11 @@ void	draw_wall_column(t_data *game, int x, double distance)
 	game->config.distance = distance;
 	calculate_draw_bounds(distance, &draw_start, &draw_end);
 	select_wall_texture(game, &current_texture);
-	draw_line(game, x, 0, x, draw_start, game->config.ceiling_color);
-	draw_wall_pixels(game, x, current_texture, draw_start, draw_end);
-	draw_line(game, x, draw_end, x, WINDOW_HEIGHT, game->config.floor_color);
+	draw_line(game, (t_point){x, 0}, (t_point){x, draw_start},
+		game->config.ceiling_color);
+	draw_wall_pixels(game, x, current_texture, (t_point){draw_start, draw_end});
+	draw_line(game, (t_point){x, draw_end}, (t_point){x, WINDOW_HEIGHT},
+		game->config.floor_color);
 }
 
 void	render(t_data *game)
