@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 11:58:35 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/08/11 11:58:53 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/08/13 10:46:29 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ double	calculate_fov_angle(t_data *game, int direction)
 	double	player_angle;
 	double	fov_angle;
 
-	player_angle = atan2(game->player.dir[1], game->player.dir[0]);
+	player_angle = atan2(-game->player.dir[0], game->player.dir[1]);
 	fov_angle = M_PI / 3.0;
 	return (player_angle + (fov_angle / 2.0) * direction);
 }

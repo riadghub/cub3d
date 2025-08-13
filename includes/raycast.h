@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:29:54 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/08/11 12:36:50 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/08/13 15:18:50 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,13 @@ void						calculate_map_position(t_data *game, int minimap_x,
 								int minimap_y, t_point *map_pos);
 void						draw_minimap_tile(t_data *game, t_point minimap_pos,
 								t_point map_pos);
+void						draw_single_fov_line(t_data *game, t_point center,
+								int direction);
+void						draw_fov_lines(t_data *game, int center_x,
+								int center_y);
+void						draw_player_direction(t_data *game, int center_x,
+								int center_y);
+void						draw_modern_player(t_data *game);
 void						render_precise_tiles(t_data *game);
 double						calculate_fov_angle(t_data *game, int direction);
 

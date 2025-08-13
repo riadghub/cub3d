@@ -79,6 +79,7 @@ typedef struct s_player
 	double		plane[2];
 	int			turndirection;
 	int			walkdirection;
+	int			strafedirection;
 	double		movespeed;
 	double		rotationspeed;
 	char		direction;

@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 14:03:55 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/08/07 12:19:38 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/08/13 11:31:42 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ double	cast_ray_dda(t_data *game, double ray_dir_x, double ray_dir_y)
 	t_point		map_pos;
 	t_ray_data	ray;
 	double		perp_wall_dist;
+	double		final_distance;
 
+	if (fabs(ray_dir_x) < 1e-10 && fabs(ray_dir_y) < 1e-10)
+		return (TILESIZE);
 	ray.ray_dir_x = ray_dir_x;
 	ray.ray_dir_y = ray_dir_y;
 	initialize_ray_data(game, &ray, &map_pos.x, &map_pos.y);
@@ -94,5 +97,8 @@ double	cast_ray_dda(t_data *game, double ray_dir_x, double ray_dir_y)
 		calculate_wall_hit_and_distance_x(game, map_pos.x, &perp_wall_dist);
 	else
 		calculate_wall_hit_and_distance_y(game, map_pos.y, &perp_wall_dist);
-	return (perp_wall_dist * TILESIZE);
+	final_distance = perp_wall_dist * TILESIZE;
+	if (final_distance <= 0)
+		final_distance = 0.01;
+	return (final_distance);
 }

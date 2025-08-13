@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 14:03:25 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/08/07 10:49:14 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/08/13 11:30:59 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	calculate_draw_bounds(double distance, int *draw_start, int *draw_end)
 	double	line_height;
 	double	exact_start;
 
+	if (distance < 0.01)
+		distance = 0.01;
 	line_height = (double)WINDOW_HEIGHT / distance * TILESIZE;
 	exact_start = ((double)WINDOW_HEIGHT - line_height) / 2.0;
 	*draw_start = (int)(exact_start);

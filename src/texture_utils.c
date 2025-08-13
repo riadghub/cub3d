@@ -6,7 +6,7 @@
 /*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 14:02:54 by reeer-aa          #+#    #+#             */
-/*   Updated: 2025/08/07 11:08:35 by reeer-aa         ###   ########.fr       */
+/*   Updated: 2025/08/13 11:31:19 by reeer-aa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	calculate_texture_y_and_color(t_data *game, void *texture, t_point pos,
 	double	exact_start;
 	t_point	coord;
 
+	if (game->config.distance < 0.01)
+		game->config.distance = 0.01;
 	line_height = (double)WINDOW_HEIGHT / game->config.distance * TILESIZE;
 	exact_start = ((double)WINDOW_HEIGHT - line_height) / 2.0;
 	tex_y = (int)(((double)(pos.y - exact_start) / line_height) * 64);

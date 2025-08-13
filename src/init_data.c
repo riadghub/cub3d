@@ -36,6 +36,7 @@ void	init_config_and_player(t_data *data)
 	data->player.plane[1] = 0;
 	data->player.turndirection = 0;
 	data->player.walkdirection = 0;
+	data->player.strafedirection = 0;
 }
 
 void	init_player_and_keys(t_data *data)
