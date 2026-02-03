@@ -15,10 +15,7 @@ Raycasting 3D faux Wolfenstein3D. Parsing .cub, textures, map rectangulaire, mou
 ```bash
 make
 
-## Usage
-
-./cub3D maps/map2.cub  # Ta map principale recommandée
-# ou
-./cub3D maps/basic.cub  # Minimal valide
-./cub3D maps/complex.cub # Multi-room
-./cub3D maps/invalid.cub # Erreur parsing
+./cub3D maps/map2.cub       # 🎮 Map principale (recommandée)
+./cub3D maps/basic.cub      # ✅ Minimal valide
+./cub3D maps/complex.cub    # 🏰 Multi-room 
+./cub3D maps/invalid.cub    # ❌ Test erreur parsing
