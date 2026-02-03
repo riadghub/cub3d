@@ -2,7 +2,7 @@
 
 Raycasting 3D faux Wolfenstein3D. Parsing .cub, textures, map rectangulaire, mouvements souris/clavier. **Collab avec [lisalana](https://github.com/lisalana)**. 
 
-![Screenshot 3D](screenshots/cub3d-raycast.gif) <!-- GIF rotation + walk -->
+![GIF 3D du jeu](cub3d.gif)
 
 ## Features
 - Parsing .cub : map, RGB floor/ceiling, 4 textures (.xpm).
@@ -16,6 +16,3 @@ Raycasting 3D faux Wolfenstein3D. Parsing .cub, textures, map rectangulaire, mou
 make
 
 ./cub3D maps/map2.cub       # 🎮 Map principale (recommandée)
-./cub3D maps/basic.cub      # ✅ Minimal valide
-./cub3D maps/complex.cub    # 🏰 Multi-room 
-./cub3D maps/invalid.cub    # ❌ Test erreur parsing
