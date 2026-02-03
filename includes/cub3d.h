@@ -1,0 +1,193 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: reeer-aa <reeer-aa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/13 16:41:33 by lsadi             #+#    #+#             */
+/*   Updated: 2025/08/07 10:58:58 by reeer-aa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef CUB3D_H
+# define CUB3D_H
+
+//# define __USE_MISC
+# include "../get_next_line/get_next_line.h"
+# include "libft.h"
+# include "mlx.h"
+# include "raycast.h"
+# include "vectors.h"
+# include <X11/keysym.h>
+# include <fcntl.h>
+# include <math.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+
+# define EQUAL =
+
+typedef struct s_config
+{
+	void		*wall;
+	void		*floor;
+	char		*texture_north;
+	char		*texture_south;
+	char		*texture_west;
+	char		*texture_est;
+	void		*texture_north_img;
+	void		*texture_south_img;
+	void		*texture_west_img;
+	void		*texture_est_img;
+	double		current_ray_dir_x;
+	double		current_ray_dir_y;
+	int			current_side;
+	int			floor_color;
+	int			ceiling_color;
+	int			last_wall_hit;
+	double		wall_hit_x;
+	double		wall_hit_y;
+	double		distance;
+	int			step_x;
+	int			step_y;
+}				t_config;
+
+typedef struct s_ray_data
+{
+	double		ray_dir_x;
+	double		ray_dir_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	int			step_x;
+	int			step_y;
+	double		side_dist_x;
+	double		side_dist_y;
+}				t_ray_data;
+
+typedef struct s_point
+{
+	int			x;
+	int			y;
+}				t_point;
+
+typedef struct s_player
+{
+	double		pos[2];
+	double		dir[2];
+	double		plane[2];
+	int			turndirection;
+	int			walkdirection;
+	int			strafedirection;
+	double		movespeed;
+	double		rotationspeed;
+	char		direction;
+	char		*texture_player;
+}				t_player;
+
+typedef struct s_mouse
+{
+	int			x;
+	int			y;
+	int			last_x;
+	int			last_y;
+	int			center_x;
+	int			center_y;
+	double		sensitivity;
+	int			is_captured;
+}				t_mouse;
+
+typedef struct s_data
+{
+	void		*mlx;
+	void		*win;
+	t_config	config;
+	char		**map;
+	int			map_width;
+	int			map_height;
+	t_player	player;
+	t_img		*img;
+	int			door_count;
+	int			keys[65536];
+	t_mouse		mouse;
+}				t_data;
+
+// ========== FONCTIONS DEV ==========
+
+// void	print_texture(char *name, char *texture);
+// void	print_textures(t_config *config);
+// void	print_config(t_config *config);
+// void	print_map(t_data *data);
+
+// ========== FONCTIONS DE PARSING ==========
+int				parse_file(const char *filename, t_data *data);
+int				process_line(char *line, t_data *data);
+int				is_color_line(char *line);
+int				get_rgb_value(char *rgb_str);
+int				convert_rgb(char *line);
+int				parse_color_line(char *line, t_config *config);
+int				is_texture_line(char *line);
+int				parse_texture_line(char *line, t_config *config);
+char			*extract_texture_path(char *trimmed);
+int				assign_texture_by_direction(t_config *config, char *path,
+					char *direction);
+int				is_map_line(char *line);
+int				validate_order(t_data *data);
+
+// ========== fonctions des touches ==========
+
+void			setup_controls(t_data *data);
+int				setup_mlx_and_game(t_data *data, char *map, char **av);
+int				mouse_move(int x, int y, t_data *game);
+void			init_mouse(t_data *game);
+int				mouse_click(int button, int x, int y, t_data *game);
+void			setup_controls(t_data *game);
+
+// ========== FONCTIONS DE GESTION DE CARTE ==========
+void			add_map_line(t_data *data, char *line);
+void			cleanup_map(t_data *data);
+int				find_player(t_data *data);
+
+// ========== FONCTIONS DE VALIDATION ==========
+int				check_walls(t_data *data);
+int				check_spaces(t_data *data);
+int				check_path(t_data *data);
+int				check_files(t_config *config);
+int				check_map(t_data *data);
+int				check_content(t_data *data);
+void			convert_spaces_to_walls(t_data *data);
+int				check_player_not_trapped(t_data *data);
+
+// ========== FONCTIONS PRINCIPALES ==========
+
+void			init_player_and_keys(t_data *data);
+void			init_config_and_player(t_data *data);
+void			init_data(t_data *data);
+int				check_file_extension(char *filename);
+int				main_loop(t_data *game);
+void			cleanup_data(t_data *data);
+void			cleanup_mlx_data(t_data *data);
+
+// Validation des bordures
+int				check_line(t_data *data, int line_index);
+int				check_sides(t_data *data, int i);
+int				check_walls(t_data *data);
+
+// Validation des espaces
+int				check_pos(t_data *data, int x, int y);
+int				check_around(t_data *data, int x, int y);
+int				check_spaces(t_data *data);
+
+// Flood fill algorithm
+int				is_border(t_data *data, int x, int y);
+void			flood_fill(char **map, t_point pos, t_data *data, int *valid);
+char			**copy_map(t_data *data);
+void			free_copy(char **map, int height);
+int				get_max_width(t_data *data);
+
+// Validation des fichiers
+int				file_exists(char *filename);
+int				check_files(t_config *config);
+
+#endif

@@ -1,0 +1,256 @@
+# Valgrind suppression file for MLX/X11 mouse and display leaks
+
+{
+   X11_strdup_leak_1
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   fun:_XlcCreateLC
+   fun:_XlcDefaultLoader
+   fun:_XOpenLC
+   fun:_XrmInitParseInfo
+   ...
+   fun:XcursorSupportsARGB
+}
+
+{
+   X11_strdup_leak_2
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   fun:_XlcResolveLocaleName
+   ...
+   fun:_XlcCreateLC
+   fun:_XlcDefaultLoader
+   fun:_XOpenLC
+   fun:_XrmInitParseInfo
+}
+
+{
+   X11_strdup_leak_3
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   ...
+   fun:_XlcCreateLC
+   fun:_XlcDefaultLoader
+   fun:_XOpenLC
+   fun:_XrmInitParseInfo
+   ...
+   fun:XGetDefault
+}
+
+{
+   X11_loader_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_XlcAddLoader
+   ...
+   fun:_XOpenLC
+   fun:_XrmInitParseInfo
+   ...
+   fun:XcursorSupportsARGB
+}
+
+{
+   Xcursor_display_info_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:_XcursorGetDisplayInfo
+   fun:XcursorSupportsARGB
+   fun:XcursorNoticeCreateBitmap
+}
+
+{
+   X11_general_reachable_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:*
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.4.0
+}
+
+{
+   Xcursor_general_reachable_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:*
+   obj:/usr/lib/x86_64-linux-gnu/libXcursor.so.1.0.2
+}
+
+{
+   X11_calloc_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:*
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.4.0
+}
+
+{
+   MLX_mouse_related_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:mlx_*
+}
+
+{
+   X11_resource_database_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:XrmGetStringDatabase
+   fun:XGetDefault
+}
+
+{
+   X11_realloc_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   ...
+   obj:/usr/lib/x86_64-linux-gnu/libX11.so.6.4.0
+}
+
+{
+   dlopen_strdup_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   fun:_dl_load_cache_lookup
+   fun:_dl_map_object
+   ...
+   fun:dlopen*
+}
+
+{
+   dlopen_new_object_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:_dl_new_object
+   fun:_dl_map_object_from_fd
+   fun:_dl_map_object
+   ...
+   fun:dlopen*
+}
+
+{
+   dlopen_calloc_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_dl_new_object
+   fun:_dl_map_object_from_fd
+   fun:_dl_map_object
+   ...
+   fun:dlopen*
+}
+
+{
+   dlopen_version_check_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:_dl_check_map_versions
+   ...
+   fun:dlopen*
+}
+
+{
+   dynamic_linker_general_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   fun:_dl_*
+   ...
+   fun:dlopen*
+}
+
+{
+   dynamic_linker_calloc_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   ...
+   fun:_dl_*
+   ...
+   fun:dlopen*
+}
+
+{
+   rtld_malloc_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:malloc
+   ...
+   fun:_dl_*
+}
+
+{
+   rtld_strdup_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   fun:strdup
+   ...
+   fun:_dl_*
+}
+
+# Specific suppression for the remaining openaux leak
+{
+   dlopen_openaux_calloc_leak
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:calloc
+   fun:_dl_new_object
+   fun:_dl_map_object_from_fd
+   fun:_dl_map_object
+   fun:openaux
+   fun:_dl_catch_exception
+   fun:_dl_map_object_deps
+   fun:dl_open_worker_begin
+   fun:_dl_catch_exception
+   fun:dl_open_worker
+   fun:_dl_catch_exception
+   fun:_dl_open
+}
+
+# Even more specific pattern for this exact stack trace
+{
+   rtld_new_object_via_openaux
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:calloc
+   fun:_dl_new_object
+   ...
+   fun:openaux
+   ...
+   fun:_dl_open
+}
+
+# Broader catch-all for any rtld calloc leaks
+{
+   rtld_calloc_general
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   fun:calloc
+   ...
+   fun:_dl_*
+}
